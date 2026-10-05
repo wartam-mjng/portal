@@ -1,0 +1,24 @@
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+*.tmp
+*.temp
+*.log
+.env
+.env.*
+!.env.example
+*.local
+node_modules/
+dist/
+build/
+coverage/
+.python-version
+
+# Backend Apps Script disimpan di Google Apps Script, bukan di static site
+materi/learning-manajemen-sistem/CBT/Kode_CBT.gs
+materi/learning-manajemen-sistem/CBT/PANDUAN.txt
+materi/learning-manajemen-sistem/TKA/Code.gs
+materi/learning-manajemen-sistem/TKA/PANDUAN.txt

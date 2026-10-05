@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bab 1 · Transformasi — Materi Matematika Kelas 9</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;line-height:1.7;color:#1f2937;background:#f1f5f9}
+.wrap{max-width:820px;margin:0 auto;padding:16px}
+header.hero{background:linear-gradient(135deg,#1e40af,#3b82f6);color:#fff;border-radius:14px;padding:28px 24px;margin-bottom:20px}
+.badge{display:inline-block;background:rgba(255,255,255,.22);padding:4px 12px;border-radius:999px;font-size:.85em;margin-bottom:10px}
+header.hero h1{font-size:1.7em;margin-bottom:6px}
+header.hero p{opacity:.95}
+.card{background:#fff;border-radius:12px;padding:22px;margin-bottom:18px;box-shadow:0 1px 4px rgba(0,0,0,.07)}
+.card h2{color:#1e40af;font-size:1.3em;border-bottom:3px solid #dbeafe;padding-bottom:8px;margin-bottom:14px}
+.card h3{color:#1e3a8a;margin:18px 0 8px;font-size:1.08em}
+.card h3:first-of-type{margin-top:0}
+.card p{margin-bottom:8px}
+.rumus{background:#eff6ff;border-left:4px solid #2563eb;padding:10px 14px;border-radius:0 8px 8px 0;margin:10px 0;font-weight:600}
+.contoh{background:#f8fafc;border:1px dashed #94a3b8;border-radius:8px;padding:10px 14px;margin:10px 0;font-size:.97em}
+ol.soal{margin:8px 0 8px 22px}
+ol.soal>li{margin-bottom:16px}
+details{background:#f0fdf4;border:1px solid #86efac;border-radius:8px;margin-top:8px}
+summary{cursor:pointer;padding:9px 14px;font-weight:600;color:#15803d;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"▶ ";font-size:.8em}
+details[open] summary::before{content:"▼ "}
+.pembahasan{padding:0 14px 12px}
+.pembahasan p{margin-bottom:6px}
+.kunci{color:#15803d;font-weight:700}
+nav.bawah{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;margin:22px 0}
+a.btn{display:inline-block;padding:10px 18px;background:#2563eb;color:#fff;text-decoration:none;border-radius:8px;font-weight:600}
+a.btn:hover{background:#1d4ed8}
+a.btn.ghost{background:#e2e8f0;color:#1e293b}
+footer{text-align:center;color:#64748b;font-size:.88em;padding:18px 0 26px}
+@media(max-width:560px){.card{padding:16px}header.hero{padding:20px 16px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+<div class="badge">Bab 1 · Matematika Kelas 9</div>
+<h1>Transformasi</h1>
+<p>Memahami empat jenis transformasi geometri: refleksi (pencerminan), translasi (pergeseran), rotasi (perputaran), dan dilatasi (perkalian).</p>
+</header>
+
+<section class="card">
+<h2>Ringkasan Materi</h2>
+
+<h3>1. Refleksi (Pencerminan)</h3>
+<p>Refleksi adalah perpindahan titik atau bangun dengan cara dicerminkan terhadap suatu garis (cermin). Sifatnya: jarak titik ke cermin sama dengan jarak bayangannya ke cermin, serta bentuk dan ukuran bangun tidak berubah (kongruen).</p>
+<div class="rumus">Titik P(x, y) direfleksikan menjadi:<br>
+• terhadap sumbu x → (x, −y)<br>
+• terhadap sumbu y → (−x, y)<br>
+• terhadap titik O(0, 0) → (−x, −y)<br>
+• terhadap garis y = x → (y, x)<br>
+• terhadap garis y = −x → (−y, −x)<br>
+• terhadap garis x = h → (2h − x, y)<br>
+• terhadap garis y = k → (x, 2k − y)</div>
+<div class="contoh"><strong>Contoh:</strong> Titik A(2, 3) dicerminkan terhadap sumbu x menjadi A′(2, −3).</div>
+
+<h3>2. Translasi (Pergeseran)</h3>
+<p>Translasi menggeser setiap titik sejauh (a, b): bergeser |a| satuan ke kanan (a positif) atau ke kiri (a negatif), dan |b| satuan ke atas (b positif) atau ke bawah (b negatif). Bentuk dan ukuran bangun tetap.</p>
+<div class="rumus">Titik P(x, y) oleh translasi T(a, b) menjadi P′(x + a, y + b)</div>
+<div class="contoh"><strong>Contoh:</strong> Titik B(1, −2) digeser oleh T(3, 4) menjadi B′(1 + 3, −2 + 4) = B′(4, 2).</div>
+
+<h3>3. Rotasi (Perputaran)</h3>
+<p>Rotasi memutar titik atau bangun dengan pusat dan sudut putar tertentu. Arah positif adalah berlawanan arah jarum jam. Bentuk dan ukuran bangun tetap.</p>
+<div class="rumus">Rotasi dengan pusat O(0, 0):<br>
+• 90° berlawanan arah jarum jam → (−y, x)<br>
+• 90° searah jarum jam → (y, −x)<br>
+• 180° (arah mana pun) → (−x, −y)</div>
+<div class="contoh"><strong>Contoh:</strong> Titik C(4, 1) dirotasi 90° berlawanan arah jarum jam dengan pusat O menjadi C′(−1, 4).</div>
+
+<h3>4. Dilatasi (Perbesaran / Perkecilan)</h3>
+<p>Dilatasi mengubah ukuran bangun dengan faktor skala k dari suatu pusat dilatasi. Jika k &gt; 1 bangun diperbesar, jika 0 &lt; k &lt; 1 bangun diperkecil, dan jika k negatif bangun diperbesar sekaligus dibalik arahnya. Bentuk bangun tetap (sebangun), ukurannya berubah.</p>
+<div class="rumus">Pusat O(0, 0), faktor skala k: P(x, y) → P′(kx, ky)<br>
+Pusat P(a, b), faktor skala k: P(x, y) → (a + k(x − a), b + k(y − b))</div>
+<div class="contoh"><strong>Contoh:</strong> Titik D(2, −3) didilatasi [O, 3] menjadi D′(6, −9).</div>
+</section>
+
+<section class="card">
+<h2>Contoh Soal &amp; Pembahasan</h2>
+
+<h3>Contoh 1</h3>
+<p>Titik A(3, −2) dicerminkan terhadap sumbu y. Tentukan koordinat bayangannya!</p>
+<div class="pembahasan">
+<p><strong>Penyelesaian:</strong></p>
+<p>Rumus refleksi terhadap sumbu y: (x, y) → (−x, y).</p>
+<p>A(3, −2) → A′(−3, −2).</p>
+<p class="kunci">Jadi, bayangannya adalah A′(−3, −2).</p>
+</div>
+
+<h3>Contoh 2</h3>
+<p>Titik B(4, 1) ditranslasikan oleh T(2, −3). Tentukan koordinat bayangannya!</p>
+<div class="pembahasan">
+<p><strong>Penyelesaian:</strong></p>
+<p>Rumus translasi: (x, y) → (x + a, y + b).</p>
+<p>B(4, 1) → B′(4 + 2, 1 + (−3)) = B′(6, −2).</p>
+<p class="kunci">Jadi, bayangannya adalah B′(6, −2).</p>
+</div>
+
+<h3>Contoh 3</h3>
+<p>Titik C(2, 5) dirotasi 90° berlawanan arah jarum jam dengan pusat O(0, 0). Tentukan koordinat bayangannya!</p>
+<div class="pembahasan">
+<p><strong>Penyelesaian:</strong></p>
+<p>Rumus rotasi 90° berlawanan arah jarum jam: (x, y) → (−y, x).</p>
+<p>C(2, 5) → C′(−5, 2).</p>
+<p class="kunci">Jadi, bayangannya adalah C′(−5, 2).</p>
+</div>
+</section>
+
+<section class="card">
+<h2>Latihan Soal</h2>
+<ol class="soal">
+<li>Titik P(−4, 3) dicerminkan terhadap sumbu x. Tentukan koordinat bayangannya!
+<details><summary>Lihat Pembahasan</summary><div class="pembahasan">
+<p>Rumus refleksi terhadap sumbu x: (x, y) → (x, −y).</p>
+<p>P(−4, 3) → P′(−4, −3).</p>
+<p class="kunci">Jawaban: P′(−4, −3).</p>
+</div></details></li>
+<li>Titik Q(1, −5) ditranslasikan oleh T(−2, 4). Tentukan koordinat bayangannya!
+<details><summary>Lihat Pembahasan</summary><div class="pembahasan">
+<p>Rumus translasi: (x, y) → (x + a, y + b).</p>
+<p>Q(1, −5) → Q′(1 + (−2), −5 + 4) = Q′(−1, −1).</p>
+<p class="kunci">Jawaban: Q′(−1, −1).</p>
+</div></details></li>
+<li>Titik R(6, −1) dirotasi 180° dengan pusat O(0, 0). Tentukan koordinat bayangannya!
+<details><summary>Lihat Pembahasan</summary><div class="pembahasan">
+<p>Rumus rotasi 180°: (x, y) → (−x, −y).</p>
+<p>R(6, −1) → R′(−6, 1).</p>
+<p class="kunci">Jawaban: R′(−6, 1).</p>
+</div></details></li>
+<li>Titik S(3, 4) didilatasi dengan pusat O(0, 0) dan faktor skala 2. Tentukan koordinat bayangannya!
+<details><summary>Lihat Pembahasan</summary><div class="pembahasan">
+<p>Rumus dilatasi [O, k]: (x, y) → (kx, ky).</p>
+<p>S(3, 4) → S′(2 × 3, 2 × 4) = S′(6, 8).</p>
+<p class="kunci">Jawaban: S′(6, 8).</p>
+</div></details></li>
+<li>Titik T(5, 2) dicerminkan terhadap garis y = x. Tentukan koordinat bayangannya!
+<details><summary>Lihat Pembahasan</summary><div class="pembahasan">
+<p>Rumus refleksi terhadap garis y = x: (x, y) → (y, x).</p>
+<p>T(5, 2) → T′(2, 5).</p>
+<p class="kunci">Jawaban: T′(2, 5).</p>
+</div></details></li>
+</ol>
+</section>
+
+<nav class="bawah">
+<a class="btn ghost" href="index.html">← Kembali ke Daftar Bab</a>
+<a class="btn" href="bab-02-kekongruenan.html">Bab 2 →</a>
+</nav>
+
+<footer>Dikembangkan oleh Wartam - SMP Negeri 4 Majenang dari berbagai sumber</footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Latihan TKA Matematika SMP — Model 4</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Segoe UI", Arial, sans-serif; background: #eef2f7; color: #1f2937; }
+  header.topbar { background: #0a3d91; color: #fff; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
+  header.topbar .judul { font-weight: 700; font-size: 16px; }
+  header.topbar .timer { background: #fff; color: #0a3d91; font-weight: 700; padding: 6px 14px; border-radius: 20px; font-size: 15px; }
+  header.topbar .timer.danger { background: #dc2626; color: #fff; }
+  .btn { border: none; border-radius: 8px; padding: 10px 20px; font-size: 14px; font-weight: 600; cursor: pointer; }
+  .btn-biru { background: #0a3d91; color: #fff; }
+  .btn-biru:hover { background: #0d4cb5; }
+  .btn-hijau { background: #15803d; color: #fff; }
+  .btn-hijau:hover { background: #16a34a; }
+  .btn-abu { background: #9ca3af; color: #fff; }
+  .wrap { display: flex; gap: 16px; max-width: 1200px; margin: 16px auto; padding: 0 12px; align-items: flex-start; }
+  .soal-panel { flex: 1; background: #fff; border-radius: 12px; padding: 22px; box-shadow: 0 2px 8px rgba(0,0,0,.08); min-height: 480px; }
+  .badge-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+  .badge { font-size: 12px; padding: 4px 10px; border-radius: 20px; font-weight: 600; }
+  .badge-el { background: #dbeafe; color: #0a3d91; }
+  .badge-bentuk { background: #fef3c7; color: #92400e; }
+  .badge-nomor { background: #0a3d91; color: #fff; }
+  .stimulus { background: #f0f7ff; border-left: 4px solid #0a3d91; padding: 12px 14px; border-radius: 0 8px 8px 0; margin-bottom: 14px; font-size: 14.5px; line-height: 1.65; }
+  .pertanyaan { font-size: 16px; font-weight: 600; line-height: 1.7; margin-bottom: 16px; }
+  .opsi { display: flex; flex-direction: column; gap: 10px; }
+  .opsi label { display: flex; gap: 10px; align-items: flex-start; border: 1px solid #d1d5db; border-radius: 8px; padding: 10px 12px; cursor: pointer; font-size: 15px; line-height: 1.6; transition: .15s; }
+  .opsi label:hover { border-color: #0a3d91; background: #f5f9ff; }
+  .opsi label.pilih { border-color: #0a3d91; background: #e8f0fe; }
+  .opsi .huruf { font-weight: 700; color: #0a3d91; min-width: 22px; }
+  .instruksi-mcma { background: #fffbeb; border: 1px dashed #d97706; padding: 8px 12px; border-radius: 8px; font-size: 13.5px; margin-bottom: 12px; color: #92400e; }
+  table.bs { width: 100%; border-collapse: collapse; margin-top: 6px; font-size: 14.5px; }
+  table.bs th, table.bs td { border: 1px solid #d1d5db; padding: 10px; text-align: left; }
+  table.bs th { background: #0a3d91; color: #fff; text-align: center; }
+  table.bs td.pilihan { text-align: center; white-space: nowrap; }
+  table.bs td.pilihan label { margin: 0 8px; cursor: pointer; font-weight: 600; }
+  .nav-soal { display: flex; justify-content: space-between; align-items: center; margin-top: 22px; flex-wrap: wrap; gap: 10px; }
+  .ragu label { display: flex; align-items: center; gap: 8px; font-size: 14px; cursor: pointer; color: #92400e; font-weight: 600; }
+  .sidebar { width: 270px; background: #fff; border-radius: 12px; padding: 16px; box-shadow: 0 2px 8px rgba(0,0,0,.08); position: sticky; top: 70px; }
+  .sidebar h3 { font-size: 14px; margin-bottom: 10px; color: #0a3d91; }
+  .nav-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+  .nav-grid button { aspect-ratio: 1; border-radius: 8px; border: 1px solid #d1d5db; background: #f9fafb; font-weight: 700; cursor: pointer; font-size: 14px; }
+  .nav-grid button.aktif { background: #0a3d91; color: #fff; border-color: #0a3d91; }
+  .nav-grid button.dijawab { background: #16a34a; color: #fff; border-color: #16a34a; }
+  .nav-grid button.ragu-flag { background: #f59e0b; color: #fff; border-color: #f59e0b; }
+  .legenda { margin-top: 12px; font-size: 12.5px; line-height: 2; }
+  .legenda span.dot { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: middle; }
+  /* overlay mulai */
+  .overlay { position: fixed; inset: 0; background: rgba(10,61,145,.96); color: #fff; display: flex; align-items: center; justify-content: center; z-index: 100; padding: 20px; }
+  .kartu-mulai { background: #fff; color: #1f2937; border-radius: 16px; padding: 32px; max-width: 620px; width: 100%; max-height: 92vh; overflow-y: auto; }
+  .kartu-mulai h1 { color: #0a3d91; font-size: 22px; margin-bottom: 6px; }
+  .kartu-mulai h2 { font-size: 14px; color: #6b7280; font-weight: 500; margin-bottom: 16px; }
+  .kartu-mulai ul { margin: 12px 0 12px 20px; line-height: 1.9; font-size: 14.5px; }
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 14px 0; }
+  .info-grid div { background: #eef4ff; border-radius: 8px; padding: 10px; font-size: 13.5px; }
+  .info-grid b { display: block; color: #0a3d91; font-size: 18px; }
+  /* hasil */
+  .hasil-panel { background: #fff; border-radius: 12px; padding: 28px; max-width: 900px; margin: 20px auto; box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+  .skor-besar { text-align: center; margin: 10px 0 20px; }
+  .skor-besar .angka { font-size: 56px; font-weight: 800; color: #0a3d91; }
+  table.rekap { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 14.5px; }
+  table.rekap th, table.rekap td { border: 1px solid #d1d5db; padding: 10px; text-align: center; }
+  table.rekap th { background: #0a3d91; color: #fff; }
+  .review-item { border: 1px solid #e5e7eb; border-radius: 10px; padding: 16px; margin-bottom: 14px; }
+  .review-item.benar { border-left: 5px solid #16a34a; }
+  .review-item.salah { border-left: 5px solid #dc2626; }
+  .review-item .kunci { font-size: 13.5px; margin-top: 8px; }
+  .review-item .bahas { background: #f0fdf4; border-radius: 8px; padding: 10px 12px; margin-top: 8px; font-size: 14px; line-height: 1.65; }
+  .tag-ok { color: #15803d; font-weight: 700; } .tag-no { color: #dc2626; font-weight: 700; }
+  .modal { position: fixed; inset: 0; background: rgba(0,0,0,.5); display: flex; align-items: center; justify-content: center; z-index: 90; padding: 20px; }
+  .modal .box { background: #fff; border-radius: 12px; padding: 24px; max-width: 420px; width: 100%; text-align: center; }
+  .modal .box p { margin-bottom: 18px; line-height: 1.7; }
+  .hidden { display: none !important; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0 4px; }
+  .form-grid label { font-size: 13.5px; font-weight: 600; color: #374151; display: flex; flex-direction: column; gap: 5px; }
+  .form-grid input, .form-grid select { padding: 9px 10px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; font-family: inherit; }
+  .identitas-box { background: #eef4ff; border-radius: 10px; padding: 14px 16px; margin-bottom: 14px; font-size: 14.5px; line-height: 1.9; }
+  footer { text-align: center; color: #6b7280; font-size: 12.5px; padding: 18px; }
+  @media (max-width: 860px) {
+    .wrap { flex-direction: column; }
+    .sidebar { width: 100%; position: static; }
+    .info-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div id="layar-mulai" class="overlay">
+  <div class="kartu-mulai">
+    <h1>📝 Latihan TKA Matematika SMP</h1>
+    <div><span class="badge badge-bentuk" style="font-size:14px">Model 4</span></div>
+    <h2>Model Tes Kemampuan Akademik — Pusat Asesmen Pendidikan, Kemendikdasmen</h2>
+    <div class="info-grid">
+      <div><b>30</b>Jumlah soal</div>
+      <div><b>60</b>Menit waktu pengerjaan</div>
+      <div><b>4</b>Elemen materi</div>
+      <div><b>3</b>Level kognitif</div>
+    </div>
+    <ul>
+      <li><b>Elemen materi:</b> Bilangan, Aljabar, Geometri &amp; Pengukuran, Data &amp; Peluang.</li>
+      <li><b>Bentuk soal:</b> Pilihan Ganda (satu jawaban benar), Pilihan Ganda Kompleks (jawaban benar lebih dari satu), dan Benar–Salah.</li>
+      <li>Gunakan tombol <b>nomor soal</b> di panel kanan untuk berpindah. Centang <b>Ragu-ragu</b> untuk menandai soal yang ingin ditinjau ulang.</li>
+      <li>Waktu habis → jawaban otomatis dikumpulkan. Klik <b>Selesai</b> bila sudah yakin.</li>
+      <li>Urutan soal <b>diacak</b> berbeda untuk setiap peserta.</li>
+      <li>Setiap peserta hanya dapat mengerjakan <b>satu kali</b> per model.</li>
+      <li>Setelah selesai tersedia <b>skor per elemen, kunci, dan pembahasan</b> tiap soal.</li>
+    </ul>
+    <h3 style="color:#0a3d91;font-size:15px;margin:14px 0 4px">👤 Identitas Peserta</h3>
+    <div class="form-grid">
+      <label>Nama Lengkap<input id="in-nama" type="text" placeholder="cth: Budi Santoso" autocomplete="off"></label>
+      <label>Kelas<select id="in-kelas"><option>9A</option><option>9B</option><option>9C</option><option>9D</option><option>9E</option><option>9F</option></select></label>
+      <label>Tanggal Lahir<input id="in-tgl" type="date"></label>
+      <label>Jenis Kelamin<select id="in-jk"><option>Laki-laki</option><option>Perempuan</option></select></label>
+    </div>
+    <div id="pesan-blokir" class="hidden" style="margin-top:12px;padding:12px 14px;border-radius:10px;background:#fef3c7;border:1px solid #f59e0b;font-size:14px;line-height:1.7;color:#92400e"></div>
+    <button id="btn-mulai" class="btn btn-biru" style="width:100%;font-size:16px;padding:13px;margin-top:14px" onclick="mulaiTes()">Mulai Mengerjakan</button>
+  </div>
+</div>
+
+<header class="topbar hidden" id="topbar">
+  <div class="judul">📝 Latihan TKA Matematika SMP</div>
+  <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end">
+    <a class="btn btn-abu" href="index.html" style="text-decoration:none;padding:8px 12px">Menu TKA</a>
+    <a class="btn btn-abu" href="../../../index.html" style="text-decoration:none;padding:8px 12px">Portal</a>
+    <div class="timer" id="timer">60:00</div>
+    <button class="btn btn-hijau" onclick="konfirmasiSelesai()">Selesai</button>
+  </div>
+</header>
+
+<div class="wrap hidden" id="area-tes">
+  <div class="soal-panel" id="panel-soal"></div>
+  <div class="sidebar">
+    <h3>Daftar Soal</h3>
+    <div class="nav-grid" id="nav-grid"></div>
+    <div class="legenda">
+      <div><span class="dot" style="background:#0a3d91"></span> Sedang dikerjakan</div>
+      <div><span class="dot" style="background:#16a34a"></span> Sudah dijawab</div>
+      <div><span class="dot" style="background:#f59e0b"></span> Ragu-ragu</div>
+      <div><span class="dot" style="background:#f9fafb;border:1px solid #d1d5db"></span> Belum dijawab</div>
+    </div>
+    <button class="btn btn-hijau" style="width:100%;margin-top:14px" onclick="konfirmasiSelesai()">Selesai &amp; Lihat Hasil</button>
+  </div>
+</div>
+
+<div id="modal-selesai" class="modal hidden">
+  <div class="box">
+    <h3 style="margin-bottom:10px;color:#0a3d91">Kumpulkan Jawaban?</h3>
+    <p id="teks-konfirmasi"></p>
+    <button class="btn btn-abu" onclick="tutupModal()">Kembali</button>
+    <button class="btn btn-hijau" onclick="kumpulkan()">Ya, Kumpulkan</button>
+  </div>
+</div>
+
+<div id="layar-hasil" class="hidden"></div>
+
+<footer>Latihan mandiri model TKA Matematika SMP — disusun berdasarkan kerangka asesmen Pusmendik Kemendikdasmen. Bukan soal resmi.</footer>
+
+<script>
+const SOAL = [
+/* ============ BILANGAN (8 soal) ============ */
+{id:1, el:"Bilangan", bentuk:"PG", kompetensi:"Operasi hitung campuran",
+ tanya:"Ibu membeli 3 kg beras seharga Rp14.000,00 per kg dan 2 liter minyak goreng seharga Rp22.000,00 per liter di sebuah warung. Ibu membayar dengan uang Rp100.000,00. Uang kembalian yang diterima Ibu adalah ....",
+ opsi:["Rp12.000,00","Rp14.000,00","Rp16.000,00","Rp24.000,00"], kunci:1,
+ bahas:"Total belanja = (3 × 14.000) + (2 × 22.000) = 42.000 + 44.000 = 86.000. Kembalian = 100.000 − 86.000 = 14.000."},
+{id:2, el:"Bilangan", bentuk:"PG", kompetensi:"Estimasi/perkiraan hasil perhitungan",
+ tanya:"Harga bensin Rp12.800,00 per liter. Pak Doni mengisi bensin sebanyak 24,6 liter untuk perjalanan mudik. Perkiraan biaya yang harus dibayar Pak Doni adalah ....",
+ opsi:["Rp250.000,00","Rp300.000,00","Rp350.000,00","Rp400.000,00"], kunci:1,
+ bahas:"24,6 × 12.800 = 314.880, paling dekat dengan Rp300.000,00 (misalnya diestimasi 25 × 12.800 = 320.000)."},
+{id:3, el:"Bilangan", bentuk:"PG", kompetensi:"Kelipatan persekutuan terkecil (KPK)",
+ tanya:"Andi mendapat giliran piket kelas setiap 4 hari dan Budi setiap 6 hari. Mereka piket bersama pada tanggal 1 Oktober. Mereka akan piket bersama lagi pada tanggal ....",
+ opsi:["10 Oktober","12 Oktober","13 Oktober","24 Oktober"], kunci:2,
+ bahas:"KPK dari 4 dan 6 adalah 12, jadi piket bersama lagi 12 hari setelah 1 Oktober, yaitu 13 Oktober."},
+{id:4, el:"Bilangan", bentuk:"PG", kompetensi:"Faktor persekutuan terbesar (FPB)",
+ tanya:"Bu Sari akan membuat parsel berisi 24 kue cokelat dan 36 kue keju. Setiap parsel berisi kedua jenis kue dengan jumlah yang sama. Banyak parsel terbanyak yang dapat dibuat adalah ....",
+ opsi:["6 parsel","8 parsel","12 parsel","72 parsel"], kunci:2,
+ bahas:"FPB dari 24 dan 36: 24 = 2³ × 3, 36 = 2² × 3², sehingga FPB = 2² × 3 = 12 parsel."},
+{id:5, el:"Bilangan", bentuk:"PG", kompetensi:"Rasio (proporsi)",
+ tanya:"Untuk membuat 3 gelas es teh dibutuhkan 6 sendok gula pasir. Banyak gula pasir yang dibutuhkan untuk membuat 10 gelas es teh adalah ....",
+ opsi:["15 sendok","18 sendok","20 sendok","30 sendok"], kunci:2,
+ bahas:"Tiap gelas butuh 6 ÷ 3 = 2 sendok, jadi 10 gelas butuh 10 × 2 = 20 sendok."},
+{id:6, el:"Bilangan", bentuk:"MCMA", kompetensi:"Perbandingan senilai dan berbalik nilai",
+ tanya:"Perhatikan pernyataan-pernyataan tentang perbandingan berikut! Pilih semua jawaban benar! Jawaban benar lebih dari satu.",
+ perny:["Suatu pekerjaan selesai dalam 20 hari oleh 5 pekerja, maka oleh 10 pekerja (kemampuan sama) selesai dalam 10 hari.","Harga 2 kg apel Rp30.000,00, maka harga 5 kg apel Rp75.000,00.","Dengan kecepatan 60 km/jam, jarak 120 km ditempuh dalam waktu 3 jam.","Jarak 90 km ditempuh dalam 1,5 jam, berarti kecepatannya 45 km/jam."], kunci:[0,1],
+ bahas:"Pernyataan 1 benar (berbalik nilai: 5 × 20 = 10 × 10). Pernyataan 2 benar (senilai: 5 × 15.000 = 75.000). Pernyataan 3 salah (120 ÷ 60 = 2 jam). Pernyataan 4 salah (90 ÷ 1,5 = 60 km/jam)."},
+{id:7, el:"Bilangan", bentuk:"BS", kompetensi:"Bilangan berpangkat dan bentuk akar",
+ tanya:"Tentukan Benar atau Salah untuk setiap pernyataan berikut!",
+ perny:["2³ × 2² = 2⁵.","√81 + √16 = √97.","(5²)³ = 5⁶."], kunci:["B","S","B"],
+ bahas:"2³ × 2² = 8 × 4 = 32 = 2⁵ (Benar). √81 + √16 = 9 + 4 = 13, sedangkan √97 ≈ 9,85 (Salah). (5²)³ = 5⁶ (Benar, pangkat dikalikan)."},
+{id:8, el:"Bilangan", bentuk:"BS", kompetensi:"Operasi hitung campuran",
+ stimulus:"Di sebuah toko alat tulis, harga 1 buku Rp8.000,00 dan 1 pensil Rp3.000,00. Dina membeli 4 buku dan 5 pensil, lalu membayar dengan uang Rp50.000,00.",
+ tanya:"Tentukan Benar atau Salah untuk setiap pernyataan berikut!",
+ perny:["Total belanja Dina adalah Rp47.000,00.","Uang kembalian yang diterima Dina adalah Rp3.000,00.","Uang kembalian yang diterima Dina adalah Rp5.000,00."], kunci:["B","B","S"],
+ bahas:"Total = (4 × 8.000) + (5 × 3.000) = 32.000 + 15.000 = 47.000 (Benar). Kembalian = 50.000 − 47.000 = 3.000, bukan 5.000 (pernyataan 2 Benar, pernyataan 3 Salah)."},
+/* ============ ALJABAR (8 soal) ============ */
+{id:9, el:"Aljabar", bentuk:"PG", kompetensi:"Persamaan linear satu variabel",
+ tanya:"Umur ayah 3 kali umur anaknya. Jumlah umur mereka 48 tahun. Umur anak sekarang adalah ....",
+ opsi:["10 tahun","12 tahun","14 tahun","36 tahun"], kunci:1,
+ bahas:"Misal umur anak = x, maka 3x + x = 48 → 4x = 48 → x = 12 tahun."},
+{id:10, el:"Aljabar", bentuk:"PG", kompetensi:"Pertidaksamaan linear satu variabel",
+ tanya:"Sebuah lift barang mampu menampung beban maksimum 500 kg. Di dalamnya sudah ada barang seberat 320 kg. Jika x menyatakan banyak kotak seberat 30 kg yang masih bisa dimasukkan, pertidaksamaan yang tepat adalah ....",
+ opsi:["x ≤ 6","x ≥ 6","x < 6","x > 6"], kunci:0,
+ bahas:"320 + 30x ≤ 500 → 30x ≤ 180 → x ≤ 6."},
+{id:11, el:"Aljabar", bentuk:"PG", kompetensi:"Sistem persamaan linear dua variabel",
+ tanya:"Harga 2 kg mangga dan 1 kg jeruk adalah Rp70.000,00. Harga 1 kg mangga dan 2 kg jeruk adalah Rp65.000,00. Harga 1 kg mangga adalah ....",
+ opsi:["Rp20.000,00","Rp25.000,00","Rp30.000,00","Rp50.000,00"], kunci:1,
+ bahas:"2m + j = 70.000 dan m + 2j = 65.000. Kalikan persamaan kedua dengan 2: 2m + 4j = 130.000. Kurangkan: 3j = 60.000 → j = 20.000, lalu m = (70.000 − 20.000) ÷ 2 = 25.000."},
+{id:12, el:"Aljabar", bentuk:"PG", kompetensi:"Faktorisasi bentuk aljabar",
+ tanya:"Bentuk faktor dari x² + 7x + 12 adalah ....",
+ opsi:["(x + 3)(x + 4)","(x + 2)(x + 6)","(x − 3)(x − 4)","(x + 1)(x + 12)"], kunci:0,
+ bahas:"Cari dua bilangan yang jumlahnya 7 dan hasil kalinya 12, yaitu 3 dan 4, sehingga x² + 7x + 12 = (x + 3)(x + 4)."},
+{id:13, el:"Aljabar", bentuk:"PG", kompetensi:"Nilai fungsi",
+ tanya:"Tarif ojek online dinyatakan dengan fungsi f(x) = 8.000x + 5.000, dengan x jarak tempuh dalam km. Tarif yang harus dibayar untuk jarak 3 km adalah ....",
+ opsi:["Rp24.000,00","Rp27.000,00","Rp29.000,00","Rp37.000,00"], kunci:2,
+ bahas:"f(3) = 8.000(3) + 5.000 = 24.000 + 5.000 = 29.000."},
+{id:14, el:"Aljabar", bentuk:"MCMA", kompetensi:"Barisan aritmetika",
+ tanya:"Diketahui barisan aritmetika 5, 9, 13, 17, .... Pilih semua jawaban benar! Jawaban benar lebih dari satu.",
+ perny:["Beda barisan tersebut adalah 4.","Rumus suku ke-n barisan tersebut adalah Un = 4n + 1.","Suku ke-10 barisan tersebut adalah 45.","Jumlah 5 suku pertama barisan tersebut adalah 65."], kunci:[0,1,3],
+ bahas:"Beda = 9 − 5 = 4 (benar). Un = 5 + (n−1)4 = 4n + 1 (benar). U10 = 4(10) + 1 = 41, bukan 45 (salah). S5 = 5 + 9 + 13 + 17 + 21 = 65 (benar)."},
+{id:15, el:"Aljabar", bentuk:"MCMA", kompetensi:"Deret geometri",
+ tanya:"Diketahui deret geometri 3 + 6 + 12 + 24 + .... Pilih semua jawaban benar! Jawaban benar lebih dari satu.",
+ perny:["Rasio deret tersebut adalah 2.","Suku ke-5 deret tersebut adalah 48.","Jumlah 4 suku pertama deret tersebut adalah 45.","Suku ke-6 deret tersebut adalah 72."], kunci:[0,1,2],
+ bahas:"Rasio = 6 ÷ 3 = 2 (benar). U5 = 3 × 2⁴ = 48 (benar). S4 = 3 + 6 + 12 + 24 = 45 (benar). U6 = 3 × 2⁵ = 96, bukan 72 (salah)."},
+{id:16, el:"Aljabar", bentuk:"BS", kompetensi:"Persamaan linear satu variabel",
+ stimulus:"Diketahui persamaan 5x − 8 = 2x + 7.",
+ tanya:"Tentukan Benar atau Salah untuk setiap pernyataan berikut!",
+ perny:["Nilai x yang memenuhi persamaan tersebut adalah 5.","Nilai dari 2x + 3 untuk x tersebut adalah 13.","Jika x diganti 4, maka ruas kiri lebih besar daripada ruas kanan."], kunci:["B","B","S"],
+ bahas:"5x − 2x = 7 + 8 → 3x = 15 → x = 5 (Benar). 2(5) + 3 = 13 (Benar). Untuk x = 4: ruas kiri = 12, ruas kanan = 15, jadi ruas kiri lebih kecil (Salah)."},
+/* ============ GEOMETRI & PENGUKURAN (7 soal) ============ */
+{id:17, el:"Geometri & Pengukuran", bentuk:"PG", kompetensi:"Teorema Pythagoras",
+ tanya:"Sebuah tiang bendera tingginya 8 m. Seutas tali diikatkan di puncak tiang dan ujung lainnya ditambatkan ke tanah sejauh tertentu dari kaki tiang. Jika panjang tali 10 m, jarak kaki tiang ke tambatan tali adalah ....",
+ opsi:["4 m","6 m","12 m","18 m"], kunci:1,
+ bahas:"Jarak = √(10² − 8²) = √(100 − 64) = √36 = 6 m."},
+{id:18, el:"Geometri & Pengukuran", bentuk:"PG", kompetensi:"Sudut pada dua garis sejajar",
+ tanya:"Dua garis sejajar dipotong oleh sebuah garis transversal sehingga terbentuk sudut A sebesar 110°. Sudut B adalah sudut dalam berseberangan dengan sudut A. Besar sudut B adalah ....",
+ opsi:["70°","90°","110°","180°"], kunci:2,
+ bahas:"Sudut dalam berseberangan besarnya sama, jadi sudut B = 110°."},
+{id:19, el:"Geometri & Pengukuran", bentuk:"PG", kompetensi:"Kesebangunan bangun datar",
+ tanya:"Segitiga ABC sebangun dengan segitiga PQR. Panjang AB = 6 cm, BC = 8 cm, dan PQ = 9 cm. Panjang QR adalah ....",
+ opsi:["10 cm","11 cm","12 cm","14 cm"], kunci:2,
+ bahas:"QR = BC × (PQ ÷ AB) = 8 × (9 ÷ 6) = 8 × 1,5 = 12 cm."},
+{id:20, el:"Geometri & Pengukuran", bentuk:"PG", kompetensi:"Luas lingkaran",
+ tanya:"Sebuah kolam ikan berbentuk lingkaran berdiameter 20 m. Luas permukaan kolam tersebut adalah ....",
+ opsi:["62,8 m²","125,6 m²","314 m²","1.256 m²"], kunci:2,
+ bahas:"Jari-jari = 10 m. Luas = 3,14 × 10² = 314 m²."},
+{id:21, el:"Geometri & Pengukuran", bentuk:"MCMA", kompetensi:"Transformasi geometri",
+ tanya:"Diketahui titik K(3, −4). Pilih semua jawaban benar! Jawaban benar lebih dari satu.",
+ perny:["Bayangan titik K oleh pencerminan terhadap sumbu-X adalah (3, 4).","Bayangan titik K oleh translasi (2, 5) adalah (5, 1).","Bayangan titik K oleh dilatasi dengan pusat (0, 0) dan faktor skala 3 adalah (6, −12).","Bayangan titik K oleh pencerminan terhadap garis y = x adalah (−4, 3)."], kunci:[0,1,3],
+ bahas:"Refleksi sumbu-X: (x, y) → (x, −y) = (3, 4) (benar). Translasi: (3+2, −4+5) = (5, 1) (benar). Dilatasi skala 3: (9, −12), bukan (6, −12) (salah). Refleksi y = x: (x, y) → (y, x) = (−4, 3) (benar)."},
+{id:22, el:"Geometri & Pengukuran", bentuk:"MCMA", kompetensi:"Volume bangun ruang",
+ tanya:"Sebuah bak mandi berbentuk balok berukuran panjang 80 cm, lebar 50 cm, dan tinggi 60 cm. Pilih semua jawaban benar! Jawaban benar lebih dari satu.",
+ perny:["Volume bak mandi adalah 240.000 cm³.","Volume bak mandi sama dengan 240 liter.","Jika bak diisi 180 liter air, tinggi air 45 cm.","Luas alas bak mandi adalah 4.800 cm²."], kunci:[0,1,2],
+ bahas:"Volume = 80 × 50 × 60 = 240.000 cm³ = 240 liter (benar). Tinggi air untuk 180 liter: 180.000 ÷ (80 × 50) = 45 cm (benar). Luas alas = 80 × 50 = 4.000 cm², bukan 4.800 (salah)."},
+{id:23, el:"Geometri & Pengukuran", bentuk:"BS", kompetensi:"Keliling dan luas bangun datar",
+ stimulus:"Sebuah persegi panjang berukuran panjang 12 cm dan lebar 8 cm.",
+ tanya:"Tentukan Benar atau Salah untuk setiap pernyataan berikut!",
+ perny:["Keliling persegi panjang tersebut adalah 40 cm.","Luas persegi panjang tersebut adalah 96 cm².","Panjang diagonal persegi panjang tersebut adalah 14 cm."], kunci:["B","B","S"],
+ bahas:"Keliling = 2(12 + 8) = 40 cm (Benar). Luas = 12 × 8 = 96 cm² (Benar). Diagonal = √(12² + 8²) = √208 ≈ 14,4 cm, bukan 14 cm (Salah)."},
+/* ============ DATA & PELUANG (7 soal) ============ */
+{id:24, el:"Data & Peluang", bentuk:"PG", kompetensi:"Rata-rata (mean) data",
+ tanya:"Nilai kuis matematika 5 siswa adalah 80, 75, 90, 85, dan 70. Rata-rata nilai kuis tersebut adalah ....",
+ opsi:["78","80","82","85"], kunci:1,
+ bahas:"Jumlah = 400, banyak data = 5. Rata-rata = 400 ÷ 5 = 80."},
+{id:25, el:"Data & Peluang", bentuk:"PG", kompetensi:"Penyajian data (diagram batang)",
+ stimulus:"Diagram batang menunjukkan penjualan buku di koperasi sekolah selama 5 hari: Senin 20 buku, Selasa 25 buku, Rabu 15 buku, Kamis 30 buku, dan Jumat 10 buku.",
+ tanya:"Jumlah seluruh buku yang terjual selama 5 hari tersebut adalah ....",
+ opsi:["90 buku","95 buku","100 buku","110 buku"], kunci:2,
+ bahas:"20 + 25 + 15 + 30 + 10 = 100 buku."},
+{id:26, el:"Data & Peluang", bentuk:"PG", kompetensi:"Peluang kejadian tunggal",
+ tanya:"Di dalam sebuah kantong terdapat 5 kelereng merah, 3 kelereng putih, dan 2 kelereng hitam. Sebuah kelereng diambil secara acak. Peluang terambil kelereng putih adalah ....",
+ opsi:["1/5","3/10","1/2","7/10"], kunci:1,
+ bahas:"P(puih) = 3 ÷ (5 + 3 + 2) = 3/10."},
+{id:27, el:"Data & Peluang", bentuk:"PG", kompetensi:"Peluang kejadian tunggal",
+ tanya:"Sebuah dadu bersisi enam yang setimbang dilempar satu kali. Peluang muncul mata dadu prima adalah ....",
+ opsi:["1/6","1/3","1/2","2/3"], kunci:2,
+ bahas:"Mata dadu prima: 2, 3, 5 (3 kejadian). Peluang = 3/6 = 1/2."},
+{id:28, el:"Data & Peluang", bentuk:"MCMA", kompetensi:"Median, modus, dan jangkauan data",
+ tanya:"Diketahui data tinggi badan (dalam cm): 150, 155, 152, 158, 155, 160, 155. Pilih semua jawaban benar! Jawaban benar lebih dari satu.",
+ perny:["Modus data tersebut adalah 155.","Median data tersebut adalah 155.","Jangkauan data tersebut adalah 10.","Rata-rata data tersebut adalah 154."], kunci:[0,1,2],
+ bahas:"Modus = 155 (muncul 3 kali) (benar). Data terurut: 150, 152, 155, 155, 155, 158, 160 → median = 155 (benar). Jangkauan = 160 − 150 = 10 (benar). Rata-rata = 1.085 ÷ 7 = 155, bukan 154 (salah)."},
+{id:29, el:"Data & Peluang", bentuk:"BS", kompetensi:"Penyajian data (diagram lingkaran)",
+ stimulus:"Diagram lingkaran menunjukkan hobi dari 36 siswa: sepak bola 50%, membaca 25%, dan menggambar 25%.",
+ tanya:"Tentukan Benar atau Salah untuk setiap pernyataan berikut!",
+ perny:["Banyak siswa yang hobi sepak bola adalah 18 orang.","Banyak siswa yang hobi membaca adalah 12 orang.","Selisih siswa yang hobi sepak bola dan menggambar adalah 9 orang."], kunci:["B","S","B"],
+ bahas:"Sepak bola: 50% × 36 = 18 (Benar). Membaca: 25% × 36 = 9, bukan 12 (Salah). Menggambar: 9 orang, selisih 18 − 9 = 9 (Benar)."},
+{id:30, el:"Data & Peluang", bentuk:"BS", kompetensi:"Rata-rata, median, dan modus data",
+ stimulus:"Diketahui data nilai: 6, 7, 8, 8, 9, 10.",
+ tanya:"Tentukan Benar atau Salah untuk setiap pernyataan berikut!",
+ perny:["Rata-rata data tersebut adalah 8.","Median data tersebut adalah 8.","Modus data tersebut adalah 7 dan 8."], kunci:["B","B","S"],
+ bahas:"Jumlah = 48 → rata-rata = 8 (Benar). Median = (8 + 8) ÷ 2 = 8 (Benar). Modus hanya 8 yang muncul 2 kali (Salah)."}
+];
+
+let idx = 0, jawaban = {}, ragu = new Set(), sisa = 60*60, timerJalan = null, mulaiWaktu = null;
+let posDariId = {};
+let identitas = null, hasilPayload = null;
+
+/* ============================================================
+   WEB APP URL (dari deploy Code.gs sebagai Web app).
+   Tempel URL-nya di antara tanda kutip di bawah ini.
+   ============================================================ */
+const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbw1L4Ula99Ne5COeOGgCWv6mo9GJOFqGcZIKrbUAQ7O-u7omlD7mHXWiCEoYFxqdDfa/exec";
+
+const TIPE_SOAL = "Model 4";
+
+function getURL(){ return WEBAPP_URL.trim(); }
+
+const HURUF = ["A","B","C","D","E"];
+const NAMA_BENTUK = {PG:"Pilihan Ganda", MCMA:"Pilihan Ganda Kompleks", BS:"Benar–Salah"};
+
+async function mulaiTes(){
+  const nama = document.getElementById("in-nama").value.trim();
+  const tgl = document.getElementById("in-tgl").value;
+  if(!nama){ alert("Isi nama lengkap dulu ya."); document.getElementById("in-nama").focus(); return; }
+  if(!tgl){ alert("Isi tanggal lahir dulu ya."); document.getElementById("in-tgl").focus(); return; }
+  identitas = { nama:nama, kelas:document.getElementById("in-kelas").value, tgl:tgl, jk:document.getElementById("in-jk").value };
+  const btn = document.getElementById("btn-mulai");
+  const pesan = document.getElementById("pesan-blokir");
+  pesan.classList.add("hidden"); pesan.innerHTML = "";
+  const url = getURL();
+  if(url){
+    btn.disabled = true; btn.textContent = "Mengecek data...";
+    try{
+      const q = new URLSearchParams({action:"cek", tipe:TIPE_SOAL, nama:identitas.nama, kelas:identitas.kelas, tglLahir:identitas.tgl});
+      const r = await fetch(url + "?" + q.toString());
+      const j = await r.json();
+      if(j && j.sudahAda){
+        btn.disabled = false; btn.textContent = "Mulai Mengerjakan";
+        pesan.innerHTML = "&#9888;&#65039; <b>"+nama+"</b> sudah mengerjakan <b>"+TIPE_SOAL+"</b>.<br>Setiap siswa hanya boleh mengerjakan satu kali. Hubungi guru jika ingin mengulang.";
+        pesan.classList.remove("hidden");
+        return;
+      }
+    }catch(err){
+      btn.disabled = false; btn.textContent = "Mulai Mengerjakan";
+      pesan.innerHTML = "&#9888;&#65039; Tidak dapat mengecek data. Periksa koneksi internet lalu coba lagi.";
+      pesan.classList.remove("hidden");
+      return;
+    }
+    btn.disabled = false; btn.textContent = "Mulai Mengerjakan";
+  }
+  for(let i = SOAL.length-1; i > 0; i--){ const j = Math.floor(Math.random()*(i+1)); const t = SOAL[i]; SOAL[i] = SOAL[j]; SOAL[j] = t; }
+  posDariId = {}; SOAL.forEach((s,i)=>{ posDariId[s.id] = i; });
+  document.getElementById("layar-mulai").classList.add("hidden");
+  document.getElementById("topbar").classList.remove("hidden");
+  document.getElementById("area-tes").classList.remove("hidden");
+  mulaiWaktu = Date.now();
+  bangunNav(); tampilSoal(0); jalanTimer();
+}
+function jalanTimer(){
+  timerJalan = setInterval(()=>{
+    sisa--;
+    const m = Math.floor(sisa/60), d = sisa%60;
+    const el = document.getElementById("timer");
+    el.textContent = String(m).padStart(2,"0")+":"+String(d).padStart(2,"0");
+    if(sisa <= 300) el.classList.add("danger");
+    if(sisa <= 0){ clearInterval(timerJalan); kumpulkan(); }
+  },1000);
+}
+function bangunNav(){
+  const g = document.getElementById("nav-grid"); g.innerHTML = "";
+  SOAL.forEach((s,i)=>{
+    const b = document.createElement("button");
+    b.id = "nav"+i; b.textContent = i+1;
+    b.onclick = ()=>tampilSoal(i);
+    g.appendChild(b);
+  });
+}
+function sudahDijawab(i){
+  const j = jawaban[i];
+  if(j===undefined) return false;
+  if(Array.isArray(j)) return j.length>0;
+  return true;
+}
+function refreshNav(){
+  SOAL.forEach((s,i)=>{
+    const b = document.getElementById("nav"+i);
+    b.className = "";
+    if(i===idx) b.classList.add("aktif");
+    else if(ragu.has(i)) b.classList.add("ragu-flag");
+    else if(sudahDijawab(i)) b.classList.add("dijawab");
+  });
+}
+function tampilSoal(i){
+  idx = i;
+  const s = SOAL[i];
+  let html = `<div class="badge-row">
+    <span class="badge badge-nomor">Soal ${i+1} dari ${SOAL.length}</span>
+    <span class="badge badge-el">${s.el}</span>
+    <span class="badge badge-bentuk">${NAMA_BENTUK[s.bentuk]}</span>
+  </div>
+  <div style="font-size:13px;color:#6b7280;margin-bottom:10px"><i>Kompetensi: ${s.kompetensi}</i></div>`;
+  if(s.stimulus) html += `<div class="stimulus">${s.stimulus}</div>`;
+  html += `<div class="pertanyaan">${s.tanya}</div>`;
+  if(s.bentuk==="PG"){
+    html += `<div class="opsi">` + s.opsi.map((o,k)=>
+      `<label class="${jawaban[i]===k?'pilih':''}"><input type="radio" name="opg" ${jawaban[i]===k?'checked':''} onchange="jawabPG(${k})"><span class="huruf">${HURUF[k]}.</span><span>${o}</span></label>`
+    ).join("") + `</div>`;
+  } else if(s.bentuk==="MCMA"){
+    html += `<div class="instruksi-mcma">☑️ Pilih <b>semua</b> pernyataan yang benar. Jawaban benar lebih dari satu.</div><div class="opsi">` +
+      s.perny.map((p,k)=>{
+        const on = (jawaban[i]||[]).includes(k);
+        return `<label class="${on?'pilih':''}"><input type="checkbox" ${on?'checked':''} onchange="jawabMCMA(${k},this.checked)"><span class="huruf">${k+1}.</span><span>${p}</span></label>`;
+      }).join("") + `</div>`;
+  } else {
+    html += `<div class="instruksi-mcma">Tentukan <b>Benar</b> atau <b>Salah</b> untuk setiap pernyataan.</div>
+    <table class="bs"><tr><th style="width:40px">No</th><th>Pernyataan</th><th style="width:170px">Jawaban</th></tr>` +
+      s.perny.map((p,k)=>{
+        const j = (jawaban[i]||[])[k];
+        return `<tr><td style="text-align:center">${k+1}</td><td>${p}</td>
+        <td class="pilihan"><label><input type="radio" name="bs${k}" ${j==="B"?"checked":""} onchange="jawabBS(${k},'B')"> Benar</label>
+        <label><input type="radio" name="bs${k}" ${j==="S"?"checked":""} onchange="jawabBS(${k},'S')"> Salah</label></td></tr>`;
+      }).join("") + `</table>`;
+  }
+  html += `<div class="nav-soal">
+    <div class="ragu"><label><input type="checkbox" ${ragu.has(i)?"checked":""} onchange="toggleRagu(this.checked)"> 🚩 Ragu-ragu</label></div>
+    <div style="display:flex;gap:8px">
+      ${i>0?`<button class="btn btn-abu" onclick="tampilSoal(${i-1})">← Sebelumnya</button>`:""}
+      ${i<SOAL.length-1?`<button class="btn btn-biru" onclick="tampilSoal(${i+1})">Berikutnya →</button>`:""}
+    </div></div>`;
+  document.getElementById("panel-soal").innerHTML = html;
+  refreshNav();
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+function jawabPG(k){ jawaban[idx]=k; tampilSoal(idx); }
+function jawabMCMA(k,on){
+  let arr = jawaban[idx]||[];
+  if(on && !arr.includes(k)) arr.push(k);
+  if(!on) arr = arr.filter(x=>x!==k);
+  jawaban[idx]=arr; tampilSoal(idx);
+}
+function jawabBS(k,v){
+  let arr = jawaban[idx]||[];
+  arr[k]=v; jawaban[idx]=arr; tampilSoal(idx);
+}
+function toggleRagu(on){ on?ragu.add(idx):ragu.delete(idx); refreshNav(); }
+function konfirmasiSelesai(){
+  const dijawab = SOAL.filter((s,i)=>sudahDijawab(i)).length;
+  document.getElementById("teks-konfirmasi").innerHTML =
+    `Soal sudah dijawab: <b>${dijawab}</b> dari ${SOAL.length}.<br>Soal belum dijawab: <b>${SOAL.length-dijawab}</b>.<br>Soal ditandai ragu-ragu: <b>${ragu.size}</b>.`;
+  document.getElementById("modal-selesai").classList.remove("hidden");
+}
+function tutupModal(){ document.getElementById("modal-selesai").classList.add("hidden"); }
+function benarTidak(s,i){
+  const j = jawaban[i];
+  if(s.bentuk==="PG") return j===s.kunci;
+  if(s.bentuk==="MCMA"){
+    if(!Array.isArray(j)) return false;
+    const a=[...j].sort().join(","), b=[...s.kunci].sort().join(",");
+    return a===b;
+  }
+  if(s.bentuk==="BS"){
+    if(!Array.isArray(j)) return false;
+    return s.kunci.every((k,n)=>j[n]===k);
+  }
+  return false;
+}
+function teksJawaban(s,i){
+  const j = jawaban[i];
+  if(j===undefined || (Array.isArray(j)&&j.length===0)) return "<i>tidak dijawab</i>";
+  if(s.bentuk==="PG") return HURUF[j]+". "+s.opsi[j];
+  if(s.bentuk==="MCMA") return [...j].sort((a,b)=>a-b).map(k=>(k+1)+". "+s.perny[k]).join("<br>");
+  const out=[]; for(let k=0;k<s.perny.length;k++) out.push(`${k+1}. ${j[k]==="B"?"Benar":j[k]==="S"?"Salah":"—"}`);
+  return out.join("<br>");
+}
+function teksKunci(s){
+  if(s.bentuk==="PG") return HURUF[s.kunci]+". "+s.opsi[s.kunci];
+  if(s.bentuk==="MCMA") return [...s.kunci].sort((a,b)=>a-b).map(k=>(k+1)+". "+s.perny[k]).join("<br>");
+  return s.kunci.map((v,k)=>`${k+1}. ${v==="B"?"Benar":"Salah"}`).join("<br>");
+}
+function kumpulkan(){
+  clearInterval(timerJalan);
+  tutupModal();
+  document.getElementById("topbar").classList.add("hidden");
+  document.getElementById("area-tes").classList.add("hidden");
+  const dur = Math.round((Date.now()-mulaiWaktu)/1000);
+  const dm = Math.floor(dur/60), ds = dur%60;
+  let skor = 0; const perEl = {};
+  SOAL.forEach(s=>{ perEl[s.el]=perEl[s.el]||{benar:0,total:0}; perEl[s.el].total++; });
+  const review = SOAL.map((s,i)=>{
+    const ok = benarTidak(s,i); if(ok){ skor++; perEl[s.el].benar++; }
+    return `<div class="review-item ${ok?'benar':'salah'}">
+      <div class="badge-row"><span class="badge badge-nomor">Soal ${i+1}</span>
+      <span class="badge badge-el">${s.el}</span>
+      <span class="${ok?'tag-ok':'tag-no'}">${ok?'✔ Benar':'✘ Salah'}</span></div>
+      ${s.stimulus?`<div class="stimulus">${s.stimulus}</div>`:""}
+      <div style="font-weight:600;margin-bottom:8px;line-height:1.6">${s.tanya}</div>
+      <div class="kunci">Jawaban kamu: ${teksJawaban(s,i)}<br>Kunci: ${teksKunci(s)}</div>
+      <div class="bahas"><b>Pembahasan:</b> ${s.bahas}</div>
+    </div>`;
+  }).join("");
+  const persen = Math.round(skor/SOAL.length*100);
+  hasilPayload = {
+    tipe: TIPE_SOAL,
+    nama: identitas.nama, kelas: identitas.kelas, tglLahir: identitas.tgl, jk: identitas.jk,
+    skor: skor, total: SOAL.length, persen: persen,
+    bilangan: perEl["Bilangan"].benar + "/" + perEl["Bilangan"].total,
+    aljabar: perEl["Aljabar"].benar + "/" + perEl["Aljabar"].total,
+    geometri: perEl["Geometri & Pengukuran"].benar + "/" + perEl["Geometri & Pengukuran"].total,
+    datapeluang: perEl["Data & Peluang"].benar + "/" + perEl["Data & Peluang"].total,
+    durasi: dm + " mnt " + ds + " dtk",
+    detail: Array.from({length:SOAL.length},(_,k)=>k+1).map(id=>id+(benarTidak(SOAL[posDariId[id]],posDariId[id])?"B":"S")).join(" "),
+    timestamp: new Date().toISOString()
+  };
+  const identHtml = `<div class="identitas-box"><b>👤 Identitas Peserta</b> &nbsp;<span class="badge badge-bentuk">Model 4</span><br>
+    Nama: ${identitas.nama} &nbsp;•&nbsp; Kelas: ${identitas.kelas} &nbsp;•&nbsp; Tgl Lahir: ${identitas.tgl} &nbsp;•&nbsp; ${identitas.jk}</div>
+    <div style="text-align:center;margin:4px 0 16px">
+      <button class="btn btn-hijau" id="btn-kirim" style="font-size:15px;padding:12px 28px" onclick="kirimHasil()">📤 Kirim Hasil ke Google Sheet</button>
+      <div id="status-kirim" style="margin-top:8px;font-size:13.5px"></div>
+    </div>`;
+  const rekapEl = Object.entries(perEl).map(([el,v])=>
+    `<tr><td style="text-align:left">${el}</td><td>${v.total}</td><td>${v.benar}</td><td>${Math.round(v.benar/v.total*100)}%</td></tr>`).join("");
+  document.getElementById("layar-hasil").innerHTML = `<div class="hasil-panel">
+    <h2 style="color:#0a3d91;text-align:center">🎯 Hasil Latihan TKA Matematika SMP</h2>
+    <div class="skor-besar"><div class="angka">${skor} / ${SOAL.length}</div><div style="color:#6b7280">Skor: ${persen}% • Waktu: ${dm} mnt ${ds} dtk</div></div>
+    ${identHtml}
+    <h3 style="color:#0a3d91;margin-bottom:6px">Rekap per Elemen Materi</h3>
+    <table class="rekap"><tr><th>Elemen</th><th>Soal</th><th>Benar</th><th>%</th></tr>${rekapEl}</table>
+    <h3 style="color:#0a3d91;margin:18px 0 10px">Pembahasan Tiap Soal</h3>
+    ${review}
+    <a class="btn btn-abu" href="index.html" style="display:block;text-align:center;margin:8px 0;text-decoration:none">Menu TKA</a>
+    <a class="btn btn-abu" href="../../../index.html" style="display:block;text-align:center;margin:8px 0;text-decoration:none">Portal</a>
+    <button class="btn btn-biru" style="width:100%;margin-top:8px;font-size:16px;padding:13px" onclick="location.reload()">🔄 Ulangi Latihan</button>
+  </div>`;
+  document.getElementById("layar-hasil").classList.remove("hidden");
+  window.scrollTo({top:0});
+}
+function kirimHasil(){
+  const st = document.getElementById("status-kirim");
+  const btn = document.getElementById("btn-kirim");
+  const url = getURL();
+  if(!url){ st.innerHTML = '<span class="tag-no">Web App URL belum ditanam di aplikasi. Hubungi guru/admin.</span>'; return; }
+  if(!hasilPayload){ st.innerHTML = '<span class="tag-no">Data hasil tidak ditemukan.</span>'; return; }
+  btn.disabled = true; st.textContent = "⏳ Mengirim hasil...";
+  const fd = new FormData();
+  fd.append("data", JSON.stringify(hasilPayload));
+  fetch(url, {method:"POST", body:fd}).then(r=>r.text()).then(t=>{
+    let ok = false;
+    try{ ok = JSON.parse(t).ok === true; }catch(e){}
+    if(ok) st.innerHTML = '<span class="tag-ok">✔ Hasil terkirim ke Google Sheet.</span>';
+    else { st.innerHTML = '<span class="tag-no">Gagal terkirim. Periksa URL / deployment, lalu coba lagi.</span>'; btn.disabled = false; }
+  }).catch(()=>{
+    st.innerHTML = '<span class="tag-no">Gagal terkirim. Periksa koneksi internet dan URL, lalu coba lagi.</span>';
+    btn.disabled = false;
+  });
+}
+</script>
+</body>
+</html>

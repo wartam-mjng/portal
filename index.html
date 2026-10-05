@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Wartam Digital: pusat pembelajaran, aplikasi, dan proyek teknologi." />
+    <meta name="theme-color" content="#0b1020" />
+    <title>Wartam Digital | Pembelajaran · Aplikasi · Teknologi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <script defer src="app.js"></script>
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="topbar">
+        <a class="brand" href="#beranda" aria-label="Wartam Digital, kembali ke beranda">
+          <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+          <span class="brand-copy"><strong>WARTAM</strong><small>DIGITAL</small></span>
+        </a>
+        <nav class="main-nav" aria-label="Navigasi utama">
+          <a class="active" href="#beranda">Beranda</a>
+          <a href="#katalog">Katalog</a>
+          <a href="#tentang">Tentang</a>
+        </nav>
+        <button class="icon-button theme-toggle" type="button" aria-label="Aktifkan tema terang" title="Ganti tema">
+          <span class="sun-icon" aria-hidden="true">☼</span>
+          <span class="moon-icon" aria-hidden="true">◐</span>
+        </button>
+      </header>
+
+      <main id="beranda">
+        <section class="hero" aria-labelledby="hero-title">
+          <div class="hero-copy">
+            <p class="eyebrow"><span class="status-dot"></span> Ruang digital yang terus bertumbuh</p>
+            <h1 id="hero-title">Belajar <em>Membuat</em><br />Berbagi dampak</h1>
+            <p class="hero-description">Satu rumah untuk pembelajaran, aplikasi, dan proyek teknologi yang membantu ide-ide baik bergerak lebih jauh.</p>
+            <a class="primary-button" href="#katalog">Jelajahi katalog <span aria-hidden="true">↗</span></a>
+          </div>
+          <div class="hero-art" aria-hidden="true">
+            <div class="orbit orbit-one"></div>
+            <div class="orbit orbit-two"></div>
+            <div class="signal signal-one"></div>
+            <div class="signal signal-two"></div>
+            <div class="hero-tile tile-main"><span class="tile-kicker">WARTAM / 01</span><strong>Ide kecil,<br /><span>kemungkinan besar</span></strong><div class="tile-line"></div></div>
+          </div>
+        </section>
+
+        <section class="catalog-section" id="katalog" aria-labelledby="catalog-title">
+          <div class="section-heading">
+            <div><p class="eyebrow">Koleksi pilihan</p><h2 id="catalog-title">Temukan ruangmu</h2></div>
+            <p class="section-note">Jelajahi apa yang sedang kami pelajari, bangun, dan kembangkan bersama</p>
+          </div>
+
+          <div class="catalog-toolbar">
+            <div class="category-tabs" role="tablist" aria-label="Filter kategori">
+              <button class="category-tab active" type="button" data-category="Semua" role="tab" aria-selected="true">Semua <span class="tab-count" data-count="Semua">0</span></button>
+              <button class="category-tab" type="button" data-category="Pembelajaran" role="tab" aria-selected="false">Pembelajaran <span class="tab-count" data-count="Pembelajaran">0</span></button>
+              <button class="category-tab" type="button" data-category="Aplikasi" role="tab" aria-selected="false">Aplikasi <span class="tab-count" data-count="Aplikasi">0</span></button>
+              <button class="category-tab" type="button" data-category="Proyek" role="tab" aria-selected="false">Proyek <span class="tab-count" data-count="Proyek">0</span></button>
+            </div>
+            <label class="search-box">
+              <span aria-hidden="true">⌕</span>
+              <input id="search-input" type="search" placeholder="Cari aplikasi atau proyek" autocomplete="off" />
+              <kbd>/</kbd>
+            </label>
+          </div>
+
+          <div id="app-grid" class="app-grid" aria-live="polite"></div>
+          <div id="empty-state" class="empty-state" hidden><span aria-hidden="true">⌕</span><h3>Belum menemukan yang dicari</h3><p>Coba kata kunci lain atau pilih kategori berbeda.</p></div>
+        </section>
+
+        <section class="about-section" id="tentang" aria-labelledby="about-title">
+          <div class="about-number">02</div>
+          <div><p class="eyebrow">Tentang Portal</p><h2 id="about-title">Teknologi yang terasa dekat</h2></div>
+          <p class="about-copy">Portal Digital dibangun sebagai ekosistem yang ringan, terbuka, dan bertumbuh secara bertahap. Kami menghubungkan materi, alat bantu dan eksperimen digital dalam satu tempat yang mudah digunakan</p>
+          <div class="about-rule"></div>
+          <div class="principles"><span><b>01</b> Sederhana</span><span><b>02</b> Terbuka</span><span><b>03</b> Berdampak</span></div>
+        </section>
+      </main>
+
+      <footer class="footer"><span>© <span id="current-year"></span> Wartam Digital</span><span>Pembelajaran · Aplikasi · Teknologi</span><a href="#beranda">Kembali ke atas ↑</a></footer>
+    </div>
+  </body>
+</html>

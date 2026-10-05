@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bab 9: Pertidaksamaan Linear Satu Variabel — Materi Matematika Kelas 7 SMP</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.75;color:#1e293b;background:#eef2f7;padding:0 0 40px}
+.container{max-width:820px;margin:0 auto;padding:16px}
+.crumb{margin:8px 0 12px;font-size:.9rem}
+.crumb a{color:#1d4ed8;text-decoration:none}
+.bab-header{background:linear-gradient(135deg,#1e3a8a,#2563eb);color:#fff;border-radius:14px;padding:28px 24px;margin-bottom:24px}
+.bab-header .no{display:inline-block;background:rgba(255,255,255,.2);padding:4px 14px;border-radius:999px;font-size:.85rem;margin-bottom:10px}
+.bab-header h1{font-size:1.7rem;margin-bottom:8px}
+.bab-header p{opacity:.92;font-size:1rem}
+section{background:#fff;border-radius:12px;padding:22px;margin-bottom:20px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+section>h2{font-size:1.3rem;color:#1e3a8a;border-bottom:3px solid #bfdbfe;padding-bottom:8px;margin-bottom:16px}
+.submateri{margin-bottom:20px}
+.submateri h3{font-size:1.08rem;color:#0f172a;margin-bottom:6px}
+.submateri p{margin-bottom:8px}
+.rumus{background:#eff6ff;border-left:4px solid #2563eb;padding:10px 14px;border-radius:0 8px 8px 0;margin:10px 0;font-weight:600}
+.contoh-kecil{background:#f0fdf4;border-left:4px solid #16a34a;padding:10px 14px;border-radius:0 8px 8px 0;margin:10px 0}
+.contoh-kecil strong{color:#15803d}
+.contoh-soal{margin-bottom:18px;padding-bottom:18px;border-bottom:1px dashed #cbd5e1}
+.contoh-soal:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.langkah{background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:12px 16px;margin-top:8px}
+.langkah ol{margin-left:20px}
+.langkah li{margin-bottom:6px}
+.latihan-item{margin-bottom:14px;padding-bottom:14px;border-bottom:1px dashed #cbd5e1}
+.latihan-item:last-child{border:none;margin:0;padding:0}
+details{margin-top:8px}
+summary{cursor:pointer;display:inline-block;background:#2563eb;color:#fff;padding:6px 16px;border-radius:8px;font-size:.9rem;font-weight:600}
+summary:hover{background:#1d4ed8}
+details .isi{background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:12px 16px;margin-top:8px}
+.bab-nav{display:flex;flex-direction:column;gap:10px;margin-top:8px}
+.bab-nav .kembali{align-self:flex-start;color:#1d4ed8;text-decoration:none;font-weight:600}
+.prevnext{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.prevnext a{background:#fff;border:1px solid #cbd5e1;border-radius:10px;padding:10px 16px;text-decoration:none;color:#1e3a8a;font-weight:600;font-size:.92rem}
+footer{text-align:center;color:#64748b;font-size:.85rem;margin-top:28px;padding:0 16px}
+@media(max-width:600px){.bab-header h1{font-size:1.4rem}section{padding:16px}}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="crumb"><a href="index.html">Materi Matematika Kelas 7</a> / Bab 9</div>
+<header class="bab-header"><span class="no">Bab 9</span><h1>Pertidaksamaan Linear Satu Variabel</h1><p>Memahami tanda pertidaksamaan, menyelesaikan PtLSV, dan menggambarkan himpunan penyelesaian pada garis bilangan.</p></header>
+<main>
+<section><h2>Ringkasan Materi</h2>
+
+<div class="submateri">
+<h3>9.1 Tanda-tanda Pertidaksamaan</h3>
+<p>Pertidaksamaan adalah kalimat matematika terbuka yang menggunakan tanda perbandingan, bukan tanda sama dengan (=). Berikut lima tanda yang dipakai:</p>
+<div class="rumus">&lt; berarti kurang dari &nbsp;|&nbsp; &gt; berarti lebih dari &nbsp;|&nbsp; ≤ berarti kurang dari atau sama dengan &nbsp;|&nbsp; ≥ berarti lebih dari atau sama dengan &nbsp;|&nbsp; ≠ berarti tidak sama dengan</div>
+<div class="contoh-kecil"><strong>Contoh:</strong> Kalimat "berat bagasi tidak lebih dari 20 kg" ditulis sebagai <em>w</em> ≤ 20. Kata "tidak lebih dari" berarti boleh sama dengan, jadi memakai tanda ≤.</div>
+</div>
+
+<div class="submateri">
+<h3>9.2 Pengertian Pertidaksamaan Linear Satu Variabel (PtLSV)</h3>
+<p>PtLSV adalah pertidaksamaan yang memiliki satu variabel (huruf yang mewakili bilangan) berpangkat satu, misalnya <em>x</em>, dan tanda salah satu dari &lt;, &gt;, ≤, atau ≥. Bentuk umumnya:</p>
+<div class="rumus"><em>ax</em> + <em>b</em> &lt; <em>c</em> &nbsp;(atau &gt;, ≤, ≥), dengan <em>a</em> ≠ 0 dan <em>x</em> variabel</div>
+<div class="contoh-kecil"><strong>Contoh:</strong> 2<em>x</em> + 5 &lt; 11 adalah PtLSV. Sedangkan <em>x</em>² − 3 &gt; 1 bukan PtLSV karena variabelnya berpangkat dua, dan 3<em>x</em> − 2<em>y</em> &gt; 7 bukan PtLSV karena memiliki dua variabel.</div>
+</div>
+
+<div class="submateri">
+<h3>9.3 Sifat-sifat Pertidaksamaan</h3>
+<p>Ada aturan dasar yang dipakai untuk menyelesaikan PtLSV:</p>
+<div class="rumus">1. Kedua ruas ditambah atau dikurang bilangan yang sama → tanda TIDAK berubah.<br>2. Kedua ruas dikali atau dibagi bilangan POSITIF → tanda TIDAK berubah.<br>3. Kedua ruas dikali atau dibagi bilangan NEGATIF → tanda DIBALIK ( &lt; menjadi &gt;, ≥ menjadi ≤, dan sebaliknya).</div>
+<div class="contoh-kecil"><strong>Contoh:</strong> Dari <em>x</em> + 4 &gt; 9 diperoleh <em>x</em> &gt; 5 (kedua ruas dikurang 4). Dari −2<em>x</em> ≤ 6 diperoleh <em>x</em> ≥ −3 (kedua ruas dibagi −2, tanda dibalik!).</div>
+</div>
+
+<div class="submateri">
+<h3>9.4 Langkah Menyelesaikan PtLSV</h3>
+<p>Untuk mendapatkan himpunan penyelesaian (semua nilai variabel yang memenuhi), ikuti langkah berikut:</p>
+<div class="rumus">Langkah: (1) sederhanakan kedua ruas bila perlu; (2) kumpulkan suku yang memuat variabel di satu ruas dan konstanta di ruas lain (ingat aturan sifat pertidaksamaan!); (3) tentukan nilai variabelnya; (4) tulis himpunan penyelesaiannya.</div>
+<div class="contoh-kecil"><strong>Contoh:</strong> Selesaikan 3<em>x</em> − 7 &gt; 5. Tambahkan 7 ke kedua ruas: 3<em>x</em> &gt; 12. Bagi kedua ruas dengan 3 (positif, tanda tetap): <em>x</em> &gt; 4. Himpunan penyelesaian: {<em>x</em> | <em>x</em> &gt; 4}.</div>
+</div>
+
+<div class="submateri">
+<h3>9.5 Himpunan Penyelesaian pada Garis Bilangan</h3>
+<p>Himpunan penyelesaian dapat digambarkan dengan garis bilangan agar mudah dilihat. Titik yang menjadi batas digambar sebagai bulatan:</p>
+<div class="rumus">Bulatan PENUH (●) untuk tanda ≤ dan ≥ (bilangan batas ikut menjadi penyelesaian).<br>Bulatan KOSONG (○) untuk tanda &lt; dan &gt; (bilangan batas TIDAK ikut menjadi penyelesaian).<br>Arsir garis ke kanan untuk &gt; atau ≥, ke kiri untuk &lt; atau ≤.</div>
+<div class="contoh-kecil"><strong>Contoh:</strong> Himpunan penyelesaian <em>x</em> ≤ 2 digambar dengan bulatan penuh pada angka 2, lalu garis diarsir ke kiri (arah bilangan yang lebih kecil).</div>
+</div>
+
+<div class="submateri">
+<h3>9.6 Soal Cerita Pertidaksamaan</h3>
+<p>Banyak soal kehidupan sehari-hari dapat diubah menjadi PtLSV. Caranya: tentukan besaran yang ditanyakan lalu misalkan dengan variabel, terjemahkan kata-katanya menjadi tanda pertidaksamaan, kemudian selesaikan seperti biasa.</p>
+<div class="rumus">Kata kunci: "tidak lebih dari" → ≤ &nbsp;|&nbsp; "tidak kurang dari" → ≥ &nbsp;|&nbsp; "kurang dari" → &lt; &nbsp;|&nbsp; "lebih dari" → &gt;</div>
+<div class="contoh-kecil"><strong>Contoh:</strong> "Tiga kali suatu bilangan ditambah 8 kurang dari 26." Modelnya: 3<em>x</em> + 8 &lt; 26 → 3<em>x</em> &lt; 18 → <em>x</em> &lt; 6. Jadi bilangan-bilangan yang memenuhi adalah semua bilangan kurang dari 6.</div>
+</div>
+
+</section>
+<section><h2>Contoh Soal &amp; Pembahasan</h2>
+
+<div class="contoh-soal">
+<p><strong>Contoh 1.</strong> Selesaikan pertidaksamaan 3<em>x</em> − 7 &gt; 5, lalu tuliskan himpunan penyelesaiannya.</p>
+<div class="langkah"><strong>Pembahasan:</strong><ol>
+<li>Tambahkan 7 ke kedua ruas: 3<em>x</em> − 7 + 7 &gt; 5 + 7 → 3<em>x</em> &gt; 12.</li>
+<li>Bagi kedua ruas dengan 3 (bilangan positif, tanda tetap): <em>x</em> &gt; 4.</li>
+<li>Himpunan penyelesaian: {<em>x</em> | <em>x</em> &gt; 4}. Pada garis bilangan: bulatan kosong pada angka 4, arsir ke kanan.</li>
+</ol></div>
+</div>
+
+<div class="contoh-soal">
+<p><strong>Contoh 2.</strong> Selesaikan pertidaksamaan −2<em>x</em> + 9 ≤ 3.</p>
+<div class="langkah"><strong>Pembahasan:</strong><ol>
+<li>Kurangi kedua ruas dengan 9: −2<em>x</em> ≤ 3 − 9 → −2<em>x</em> ≤ −6.</li>
+<li>Bagi kedua ruas dengan −2 (bilangan negatif → tanda DIBALIK): <em>x</em> ≥ 3.</li>
+<li>Himpunan penyelesaian: {<em>x</em> | <em>x</em> ≥ 3}. Pada garis bilangan: bulatan penuh pada angka 3, arsir ke kanan.</li>
+</ol></div>
+</div>
+
+<div class="contoh-soal">
+<p><strong>Contoh 3.</strong> Ibu mempunyai uang Rp50.000,00. Ia ingin membeli 4 buku tulis yang masing-masing berharga <em>p</em> rupiah. Jika sisa uang ibu tidak kurang dari Rp14.000,00, tentukan harga maksimum satu buku.</p>
+<div class="langkah"><strong>Pembahasan:</strong><ol>
+<li>Buat model matematika: sisa uang = 50.000 − 4<em>p</em>. "Tidak kurang dari 14.000" berarti ≥ 14.000. Jadi 50.000 − 4<em>p</em> ≥ 14.000.</li>
+<li>Kurangi kedua ruas dengan 50.000: −4<em>p</em> ≥ 14.000 − 50.000 → −4<em>p</em> ≥ −36.000.</li>
+<li>Bagi kedua ruas dengan −4 (negatif → tanda dibalik): <em>p</em> ≤ 9.000.</li>
+<li>Jadi harga maksimum satu buku adalah Rp9.000,00.</li>
+</ol></div>
+</div>
+
+</section>
+<section><h2>Latihan Soal</h2>
+
+<div class="latihan-item">
+<p><strong>1.</strong> Selesaikan pertidaksamaan 2<em>x</em> + 3 ≤ 11, lalu tentukan himpunan penyelesaiannya.</p>
+<details><summary>Lihat Pembahasan</summary><div class="isi"><p><strong>Jawaban: <em>x</em> ≤ 4</strong></p><p>Kurangi kedua ruas dengan 3: 2<em>x</em> ≤ 8. Bagi kedua ruas dengan 2 (positif, tanda tetap): <em>x</em> ≤ 4.</p></div></details>
+</div>
+
+<div class="latihan-item">
+<p><strong>2.</strong> Selesaikan pertidaksamaan 5 − 3<em>x</em> &gt; 20.</p>
+<details><summary>Lihat Pembahasan</summary><div class="isi"><p><strong>Jawaban: <em>x</em> &lt; −5</strong></p><p>Kurangi kedua ruas dengan 5: −3<em>x</em> &gt; 15. Bagi kedua ruas dengan −3 (negatif → tanda dibalik): <em>x</em> &lt; −5.</p></div></details>
+</div>
+
+<div class="latihan-item">
+<p><strong>3.</strong> Selesaikan pertidaksamaan 4<em>x</em> − 9 ≥ 7, lalu gambarkan himpunan penyelesaiannya pada garis bilangan.</p>
+<details><summary>Lihat Pembahasan</summary><div class="isi"><p><strong>Jawaban: <em>x</em> ≥ 4</strong></p><p>Tambahkan 9 ke kedua ruas: 4<em>x</em> ≥ 16. Bagi kedua ruas dengan 4: <em>x</em> ≥ 4. Pada garis bilangan: bulatan penuh pada angka 4, arsir ke kanan.</p></div></details>
+</div>
+
+<div class="latihan-item">
+<p><strong>4.</strong> Rina membeli 5 buku yang masing-masing berharga <em>b</em> rupiah. Total harga yang dibayar tidak lebih dari Rp35.000,00. Tentukan harga maksimum satu buku.</p>
+<details><summary>Lihat Pembahasan</summary><div class="isi"><p><strong>Jawaban: Rp7.000,00</strong></p><p>Model: 5<em>b</em> ≤ 35.000. Bagi kedua ruas dengan 5: <em>b</em> ≤ 7.000. Jadi harga maksimum satu buku Rp7.000,00.</p></div></details>
+</div>
+
+<div class="latihan-item">
+<p><strong>5.</strong> Tentukan himpunan penyelesaian dari −<em>x</em> + 4 ≥ 1, lalu gambarkan pada garis bilangan.</p>
+<details><summary>Lihat Pembahasan</summary><div class="isi"><p><strong>Jawaban: <em>x</em> ≤ 3</strong></p><p>Kurangi kedua ruas dengan 4: −<em>x</em> ≥ −3. Bagi kedua ruas dengan −1 (negatif → tanda dibalik): <em>x</em> ≤ 3. Pada garis bilangan: bulatan penuh pada angka 3, arsir ke kiri.</p></div></details>
+</div>
+
+</section>
+</main>
+<nav class="bab-nav">
+<a class="kembali" href="index.html">← Kembali ke Daftar Bab</a>
+<div class="prevnext"><a href="bab-08-kesebangunan.html">← Bab 8: Kesebangunan</a><a href="bab-10-pola-bilangan.html">Bab 10: Pola Bilangan →</a></div>
+</nav>
+<footer>Dikembangkan oleh Wartam - SMP Negeri 4 Majenang dari berbagai sumber</footer>
+</div>
+</body>
+</html>

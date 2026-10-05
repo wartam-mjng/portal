@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CBT Matematika SMP</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background: #eef2f7; color: #1e293b; line-height: 1.6; }
+  .hidden { display: none !important; }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 20px 16px 48px; }
+  /* Home */
+  .hero { background: linear-gradient(135deg, #0f766e, #14b8a6); color: #fff; text-align: center; padding: 52px 20px 44px; }
+  .hero h1 { font-size: 1.9rem; margin-bottom: 8px; }
+  .hero p { opacity: .93; max-width: 620px; margin: 0 auto; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; margin-top: 24px; }
+  .card { background: #fff; border-radius: 14px; padding: 24px 20px; border: none; cursor: pointer; text-align: left; box-shadow: 0 2px 10px rgba(15,23,42,.07); border-top: 6px solid #14b8a6; transition: transform .15s, box-shadow .15s; font-family: inherit; }
+  .card:hover { transform: translateY(-3px); box-shadow: 0 8px 22px rgba(15,23,42,.13); }
+  .card .icon { font-size: 2rem; }
+  .card h2 { font-size: 1.2rem; margin: 8px 0 4px; }
+  .card p { font-size: .9rem; color: #475569; }
+  .card .count { display: inline-block; margin-top: 10px; font-size: .8rem; font-weight: 700; background: #ccfbf1; color: #0f766e; padding: 3px 12px; border-radius: 999px; }
+  .paket { background: #fff; border-radius: 12px; padding: 18px 20px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 12px; box-shadow: 0 2px 8px rgba(15,23,42,.06); }
+  .paket h3 { font-size: 1.02rem; }
+  .paket p { font-size: .88rem; color: #64748b; }
+  .btn { display: inline-block; background: #0d9488; color: #fff; border: none; border-radius: 10px; padding: 12px 26px; font-size: 1rem; font-weight: 700; cursor: pointer; font-family: inherit; }
+  .btn:hover { background: #0f766e; }
+  .btn.secondary { background: #e2e8f0; color: #334155; }
+  .btn.secondary:hover { background: #cbd5e1; }
+  .btn.danger { background: #dc2626; }
+  .btn:disabled { opacity: .55; cursor: not-allowed; }
+  .field { margin-bottom: 14px; }
+  .field label { display: block; font-weight: 600; margin-bottom: 6px; }
+  .field input { width: 100%; padding: 12px; border: 2px solid #cbd5e1; border-radius: 10px; font-size: 1rem; font-family: inherit; }
+  .field input:focus { outline: none; border-color: #14b8a6; }
+  .field select { width: 100%; padding: 12px; border: 2px solid #cbd5e1; border-radius: 10px; font-size: 1rem; font-family: inherit; background: #fff; }
+  .field select:focus { outline: none; border-color: #14b8a6; }
+  .panel { background: #fff; border-radius: 14px; padding: 26px 24px; box-shadow: 0 2px 10px rgba(15,23,42,.07); }
+  .panel h2 { margin-bottom: 6px; }
+  .panel .sub { color: #64748b; font-size: .92rem; margin-bottom: 18px; }
+  .backlink { display: inline-block; margin-bottom: 16px; color: #0d9488; text-decoration: none; font-weight: 600; }
+  /* ===== Ujian (tema gelap ala CBT) ===== */
+  body.exam-dark { background: #0b1526; color: #e2e8f0; }
+  .exam-top { position: sticky; top: 0; z-index: 10; background: linear-gradient(135deg, #0f766e, #14b8a6); color: #fff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; border-radius: 0 0 18px 18px; margin: 0 8px; }
+  .exam-title { font-weight: 800; font-size: 1.05rem; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .autosave { font-size: .72rem; font-weight: 600; background: rgba(255,255,255,.22); padding: 3px 10px; border-radius: 999px; white-space: nowrap; }
+  .exam-mid { text-align: center; font-weight: 800; line-height: 1.25; }
+  .exam-mid small { display: block; font-weight: 600; font-size: .72rem; opacity: .85; }
+  .timer-pill { background: rgba(255,255,255,.95); color: #0f172a; font-weight: 800; padding: 8px 18px; border-radius: 999px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .timer-pill.warn { background: #ef4444; color: #fff; animation: pulse 1s infinite; }
+  @keyframes pulse { 50% { opacity: .7; } }
+  .exam-wrap { max-width: 1100px; }
+  .exam-body { display: flex; gap: 16px; align-items: flex-start; }
+  .soal-box { flex: 1; background: #14213a; border: 1px solid #1e3a5f; border-radius: 14px; padding: 22px; min-width: 0; }
+  .soal-head { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+  .soal-nomor { font-weight: 800; color: #2dd4bf; letter-spacing: .5px; }
+  .tipe-badge { font-size: .72rem; font-weight: 700; background: #2563eb; color: #fff; padding: 3px 12px; border-radius: 999px; margin-left: 8px; white-space: nowrap; }
+  .fontsize { font-size: .8rem; color: #94a3b8; }
+  .fontsize button { background: #1e293b; color: #e2e8f0; border: 1px solid #334155; border-radius: 8px; padding: 4px 10px; margin-left: 4px; cursor: pointer; font-family: inherit; font-weight: 700; }
+  .fontsize button.aktif { background: #14b8a6; border-color: #14b8a6; color: #06281f; }
+  .stimulus { background: #0e2a3a; border: 1px solid #155e75; border-radius: 10px; padding: 14px 16px; margin-bottom: 16px; font-size: .92rem; }
+  .stimulus .stim-label { font-size: .72rem; font-weight: 800; color: #67e8f9; letter-spacing: 1px; margin-bottom: 6px; }
+  .soal-box .teks { font-size: 1.08rem; margin-bottom: 18px; color: #f1f5f9; }
+  .opsi { display: block; width: 100%; text-align: left; background: #1b2b4d; border: 2px solid #2b3f66; color: #e2e8f0; border-radius: 10px; padding: 12px 14px; margin-bottom: 10px; font-size: .98rem; cursor: pointer; font-family: inherit; }
+  .opsi:hover { border-color: #14b8a6; }
+  .opsi.pilih { background: #0d3a36; border-color: #14b8a6; font-weight: 600; }
+  .opsi .huruf { display: inline-block; font-weight: 800; width: 28px; height: 28px; line-height: 28px; text-align: center; border-radius: 50%; background: #334155; margin-right: 10px; color: #fff; }
+  .opsi.pilih .huruf { background: #14b8a6; color: #06281f; }
+  .side { width: 230px; flex-shrink: 0; background: #14213a; border: 1px solid #1e3a5f; border-radius: 14px; padding: 16px; position: sticky; top: 84px; }
+  .side h4 { font-size: .85rem; letter-spacing: 1px; margin-bottom: 12px; color: #cbd5e1; }
+  .numgrid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 14px; }
+  .num { aspect-ratio: 1; border: 2px solid #334155; background: #1b2b4d; color: #cbd5e1; border-radius: 8px; font-weight: 700; cursor: pointer; font-family: inherit; }
+  .num.current { border-color: #60a5fa; box-shadow: 0 0 0 2px #60a5fa55; color: #fff; }
+  .num.done { background: #16a34a; border-color: #16a34a; color: #fff; }
+  .num.flagged { background: #eab308; border-color: #eab308; color: #422006; }
+  .legend { font-size: .78rem; color: #94a3b8; margin-bottom: 12px; }
+  .legend div { margin-bottom: 4px; }
+  .legend span { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; }
+  .exam-bottom { position: sticky; bottom: 0; z-index: 10; display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 12px 20px; background: rgba(14,25,48,.94); border-top: 1px solid #1e3a5f; margin-top: 16px; flex-wrap: wrap; }
+  .btn.ghost { background: transparent; color: #94a3b8; border: 1px solid #334155; }
+  .btn.ghost:disabled { opacity: .35; cursor: not-allowed; }
+  .btn.ragu { background: #b45309; color: #fff; }
+  .btn.ragu.aktif { background: #facc15; color: #422006; box-shadow: 0 0 0 3px #facc1555; }
+  .btn.next { background: #14b8a6; }
+  .btn.next:hover { background: #0d9488; }
+  @media (max-width: 720px) { .exam-body { flex-direction: column; } .side { width: 100%; position: static; } }
+  /* Daftar paket (tema gelap) */
+  #screen-paket .panel { background: #101d33; border: 1px solid #1e3a5f; }
+  #screen-paket .panel h2 { color: #f1f5f9; }
+  #screen-paket .panel .sub { color: #94a3b8; }
+  #screen-paket .paket { background: #16294d; border: 1px solid #23406f; box-shadow: none; }
+  #screen-paket .paket h3 { color: #f1f5f9; }
+  #screen-paket .paket p { color: #94a3b8; }
+  #screen-paket .paket .btn { background: #14b8a6; white-space: nowrap; }
+  #screen-paket .paket .btn:hover { background: #0d9488; }
+/* Hasil */
+  .score-big { text-align: center; padding: 10px 0 18px; }
+  .score-big .nilai { font-size: 3.4rem; font-weight: 800; color: #0d9488; }
+  .score-big .ket { color: #64748b; }
+  .stat-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 18px; }
+  .stat { background: #f8fafc; border-radius: 10px; padding: 10px 20px; text-align: center; }
+  .stat b { display: block; font-size: 1.3rem; }
+  .stat span { font-size: .8rem; color: #64748b; }
+  .instruksi{background:#0f2f3a;border:1px dashed #2dd4bf66;color:#99f6e4;border-radius:10px;padding:10px 14px;margin-bottom:12px;font-size:.92rem}
+  .opsi .kotak{display:inline-flex;width:22px;height:22px;border:2px solid #2dd4bf;border-radius:6px;margin-right:12px;align-items:center;justify-content:center;color:#0b2b33;font-weight:800;flex:0 0 auto;font-size:.85rem}
+  .opsi.pilih .kotak{background:#2dd4bf}
+  .jodoh-row{display:flex;gap:12px;align-items:center;background:#12232e;border:1px solid #1e3a4a;border-radius:12px;padding:12px 14px;margin-bottom:10px;flex-wrap:wrap}
+  .jodoh-item{flex:1 1 220px;color:#e8f4f1}
+  .jodoh-select{flex:1 1 200px;background:#0b1d27;color:#e8f4f1;border:1.5px solid #2dd4bf66;border-radius:10px;padding:10px;font-size:1rem}
+  .isian-input{width:100%;background:#0b1d27;border:1.5px solid #2dd4bf66;color:#fff;border-radius:12px;padding:14px;font-size:1.05rem;box-sizing:border-box}
+  .isian-input:focus{outline:none;border-color:#2dd4bf}
+  .paket-aksi{display:flex;gap:8px;margin-top:12px}
+  .paket .btn{flex:1}
+  .btn-bagikan{background:#1e3a4a;border:1.5px solid #2dd4bf88;color:#5eead4;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer;white-space:nowrap}
+  .btn-bagikan:hover{background:#24485a}
+  .tipe-info{font-size:.78rem !important;color:#5eead4 !important;margin-top:6px !important}
+  .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#0f766e;color:#fff;padding:12px 20px;border-radius:12px;font-weight:600;z-index:99;box-shadow:0 6px 20px rgba(0,0,0,.4);opacity:0;transition:opacity .3s;pointer-events:none;max-width:90vw;text-align:center}
+  .toast.show{opacity:1}
+  .kirim-box { border-radius: 10px; padding: 12px 16px; margin-bottom: 18px; font-size: .93rem; background: #f1f5f9; }
+  .kirim-box.ok { background: #dcfce7; color: #166534; }
+  .kirim-box.err { background: #fee2e2; color: #991b1b; }
+  details.bahas { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px; margin-bottom: 12px; }
+  details.bahas summary { cursor: pointer; font-weight: 700; color: #0d9488; }
+  .badge { display: inline-block; font-size: .75rem; font-weight: 700; padding: 2px 10px; border-radius: 999px; margin-left: 8px; }
+  .badge.benar { background: #dcfce7; color: #166534; }
+  .badge.salah { background: #fee2e2; color: #991b1b; }
+  footer { text-align: center; padding: 26px 16px 34px; color: #64748b; font-size: .85rem; }
+  footer .credit { margin-top: 4px; font-weight: 600; color: #475569; }
+  @media print { .exam-top, .exam-bottom, .side, .no-print { display: none !important; } body { background: #fff; } }
+</style>
+</head>
+<body>
+
+<!-- LAYAR: BERANDA -->
+<div id="screen-home">
+  <div class="hero">
+    <h1>💻 CBT Matematika SMP</h1>
+    <p>Ujian berbasis komputer per bab untuk kelas 7, 8, dan 9 — lengkap dengan timer, skor otomatis, pembahasan, dan hasil tersimpan otomatis di Google Sheets.</p>
+  </div>
+  <div class="wrap">
+    <div class="grid">
+      <button class="card" onclick="pilihKelas('7')">
+        <div class="icon">📗</div><h2>CBT Kelas 7</h2>
+        <p>Paket ujian per bab: bilangan, aljabar, geometri, dan lainnya.</p>
+        <span class="count">12 Paket</span>
+      </button>
+      <button class="card" onclick="pilihKelas('8')">
+        <div class="icon">📘</div><h2>CBT Kelas 8</h2>
+        <p>Paket ujian per bab: eksponen, fungsi, SPLDV, Pythagoras, dan lainnya.</p>
+        <span class="count">9 Paket</span>
+      </button>
+      <button class="card" onclick="pilihKelas('9')">
+        <div class="icon">📕</div><h2>CBT Kelas 9</h2>
+        <p>Paket ujian per bab: transformasi, lingkaran, bangun ruang, plus try out.</p>
+        <span class="count">7 Paket</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- LAYAR: DAFTAR PAKET -->
+<div id="screen-paket" class="hidden">
+  <div class="wrap">
+    <a class="backlink" href="#" onclick="show('screen-home');return false;">← Kembali</a>
+    <div class="panel">
+      <h2 id="paket-judul">Daftar Paket</h2>
+      <p class="sub">Pilih paket ujian. Setiap paket berisi 10 soal pilihan ganda dengan waktu 30 menit.</p>
+      <div id="daftar-paket"></div>
+    </div>
+  </div>
+</div>
+
+<!-- LAYAR: IDENTITAS -->
+<div id="screen-identitas" class="hidden">
+  <div class="wrap">
+    <a class="backlink" href="#" onclick="show('screen-paket');return false;">← Kembali</a>
+    <div class="panel">
+      <h2>Identitas Peserta</h2>
+      <p class="sub" id="identitas-sub"></p>
+      <div class="field">
+        <label for="in-nama">Nama lengkap</label>
+        <input id="in-nama" type="text" placeholder="cth: Anton Dwy Saputra" autocomplete="off">
+      </div>
+      <div class="field">
+        <label for="in-sekolah">Sekolah</label>
+        <select id="in-sekolah"></select>
+        <input id="in-sekolah-baru" type="text" class="hidden" style="margin-top:8px" placeholder="Ketik nama sekolah baru" autocomplete="off">
+      </div>
+      <div class="field">
+        <label for="in-kelas">Kelas</label>
+        <select id="in-kelas"></select>
+        <input id="in-kelas-baru" type="text" class="hidden" style="margin-top:8px" placeholder="Ketik kelas baru (cth: 7G)" autocomplete="off">
+      </div>
+      <button class="btn" onclick="mulaiUjian()">Mulai Ujian ▶</button>
+      <p class="sub" style="margin-top:14px;margin-bottom:0;">⏱️ Waktu: 30 menit • 10 soal • Jawaban tersimpan otomatis ke Google Sheets saat selesai.</p>
+    </div>
+  </div>
+</div>
+
+<!-- LAYAR: UJIAN -->
+<div id="screen-ujian" class="hidden">
+  <div class="exam-top">
+    <div class="exam-title"><span id="exam-judul"></span><span class="autosave">&#10003; Tersimpan Otomatis</span></div>
+    <div class="exam-mid" id="exam-tingkat"></div>
+    <div class="timer-pill" id="timer-pill">Sisa Waktu: <span id="timer">30:00</span></div>
+  </div>
+  <div class="wrap exam-wrap">
+    <div class="exam-body">
+      <div class="soal-box">
+        <div class="soal-head">
+          <div><span class="soal-nomor" id="soal-nomor"></span><span class="tipe-badge">Pilihan Ganda</span></div>
+          <div class="fontsize">Ukuran Font:
+            <button onclick="setFont(-1)">A-</button><button onclick="setFont(0)" class="aktif">A</button><button onclick="setFont(1)">A+</button>
+          </div>
+        </div>
+        <div id="stimulus-box"></div>
+        <div class="teks" id="soal-teks"></div>
+        <div id="soal-opsi"></div>
+      </div>
+      <div class="side">
+        <h4>DAFTAR SOAL</h4>
+        <div class="numgrid" id="numgrid"></div>
+        <div class="legend">
+          <div><span style="background:#16a34a"></span>Sudah dijawab</div>
+          <div><span style="background:#eab308"></span>Ragu-ragu</div>
+          <div><span style="background:transparent;border:2px solid #60a5fa"></span>Sedang dibuka</div>
+          <div><span style="background:#1b2b4d;border:1px solid #334155"></span>Belum dijawab</div>
+        </div>
+        <button class="btn danger" style="width:100%;margin-top:6px;" onclick="konfirmasiSelesai()">Selesai</button>
+      </div>
+    </div>
+  </div>
+  <div class="exam-bottom">
+    <button class="btn ghost" id="btn-prev" onclick="pindahSoal(-1)">&#8592; Soal Sebelumnya</button>
+    <button class="btn ragu" id="btn-ragu" onclick="toggleRaguBtn()">&#9744; Ragu-ragu</button>
+    <button class="btn next" id="btn-next" onclick="pindahSoal(1)">Soal Berikutnya &#8594;</button>
+  </div>
+</div>
+<!-- LAYAR: HASIL -->
+<div id="screen-hasil" class="hidden">
+  <div class="wrap">
+    <div class="panel">
+      <h2>Hasil Ujian</h2>
+      <p class="sub" id="hasil-sub"></p>
+      <div class="score-big"><div class="nilai" id="hasil-nilai"></div><div class="ket">Nilai</div></div>
+      <div class="stat-row">
+        <div class="stat"><b id="st-benar"></b><span>Benar</span></div>
+        <div class="stat"><b id="st-salah"></b><span>Salah</span></div>
+        <div class="stat"><b id="st-durasi"></b><span>Durasi</span></div>
+      </div>
+      <div class="kirim-box" id="status-kirim">⏳ Menyiapkan pengiriman...</div>
+      <h3 style="margin:18px 0 10px;">Pembahasan</h3>
+      <div id="daftar-bahas"></div>
+      <div class="no-print" style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap;">
+        <button class="btn secondary" onclick="window.print()">🖨️ Cetak Hasil</button>
+        <button class="btn" onclick="kembaliPaket()">Daftar Paket</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  CBT Matematika SMP — Kurikulum Merdeka
+  <div class="credit">Dikembangkan oleh Wartam - SMP Negeri 4 Majenang dari berbagai sumber</div>
+</footer>
+
+<div class="toast" id="toast"></div>
+<script src="bank-kelas-7.js"></script>
+<script src="bank-kelas-8.js"></script>
+<script src="bank-kelas-9.js"></script>
+<script>
+/* ================= KONFIGURASI ================= */
+// Tempel URL Web App Apps Script di bawah ini (lihat PANDUAN.txt).
+// Jika dikosongkan, hasil hanya ditampilkan tanpa dikirim ke Google Sheets.
+const CONFIG = {
+  WEB_APP_URL: "https://script.google.com/macros/s/AKfycbyN0Cum-3OlFsmvX12MXVjH7i2MuBDkqFEkN5HeoFKfj4giHv2a6v8fdy2EmItDKkf3/exec",
+  WAKTU_MENIT: 30
+};
+/* =============================================== */
+
+const state = {
+  tingkat: null, paket: null, exam: [],
+  nama: "", kelasRombel: "",
+  answers: [], flagged: [], current: 0,
+  startTime: 0, timerId: null, lastPayload: null, sudahKirim: false
+};
+
+function show(id) {
+  ["screen-home","screen-paket","screen-identitas","screen-ujian","screen-hasil"].forEach(s =>
+    document.getElementById(s).classList.add("hidden"));
+  document.getElementById(id).classList.remove("hidden");
+  document.body.classList.toggle("exam-dark", id === "screen-ujian");
+  window.scrollTo(0,0);
+}
+
+const TIPE_LABEL = { pg:"Pilihan Ganda", pgk:"PG Kompleks", bs:"Benar / Salah", jodoh:"Menjodohkan", isian:"Isian Singkat" };
+const HURUF = ["A","B","C","D","E"];
+
+function isAnswered(i) {
+  const s = state.exam[i], a = state.answers[i];
+  if (!s) return false;
+  if (s.tipe === "pgk") return Array.isArray(a) && a.length > 0;
+  if (s.tipe === "jodoh") return Array.isArray(a) && a.every(v => v !== null && v !== undefined && v !== "");
+  if (s.tipe === "isian") return typeof a === "string" && a.trim() !== "";
+  return a !== null && a !== undefined;
+}
+function normIsian(t){ return String(t).trim().toLowerCase().replace(/\s+/g," ").replace(/,/g,"."); }
+function checkAnswer(s, a) {
+  if (s.tipe === "pgk") {
+    if (!Array.isArray(a) || !a.length) return false;
+    return [...a].sort((p,q)=>p-q).join(",") === [...s.kunci].sort((p,q)=>p-q).join(",");
+  }
+  if (s.tipe === "bs") return a === s.kunci;
+  if (s.tipe === "jodoh") return Array.isArray(a) && a.length === s.kunci.length && a.every((v,k) => v === s.kunci[k]);
+  if (s.tipe === "isian") {
+    if (typeof a !== "string" || !a.trim()) return false;
+    const na = normIsian(a);
+    return s.kunci.some(k => {
+      const nk = normIsian(k);
+      if (na === nk) return true;
+      const fa = parseFloat(na), fk = parseFloat(nk);
+      return na !== "" && nk !== "" && !isNaN(fa) && !isNaN(fk) && fa === fk;
+    });
+  }
+  return a === s.kunci;
+}
+function jawabanStr(s, a){
+  if (s.tipe === "pgk") return (Array.isArray(a) && a.length) ? [...a].sort((p,q)=>p-q).map(k=>HURUF[k]).join("") : "-";
+  if (s.tipe === "bs") return (a === null || a === undefined) ? "-" : (a ? "B" : "S");
+  if (s.tipe === "jodoh") return Array.isArray(a) ? a.map((v,k)=>(k+1)+(v===null||v===undefined||v===""?"-":HURUF[v])).join(" ") : "-";
+  if (s.tipe === "isian") return (typeof a === "string" && a.trim()) ? a.trim().slice(0,40) : "-";
+  return (a === null || a === undefined) ? "-" : HURUF[a];
+}
+function kunciStr(s){
+  if (s.tipe === "pgk") return [...s.kunci].sort((p,q)=>p-q).map(k=>HURUF[k]).join("");
+  if (s.tipe === "bs") return s.kunci ? "B" : "S";
+  if (s.tipe === "jodoh") return s.kunci.map((v,k)=>(k+1)+HURUF[v]).join(" ");
+  if (s.tipe === "isian") return s.kunci[0];
+  return HURUF[s.kunci];
+}
+function jawabanTeks(s, a){
+  if (s.tipe === "pgk") return (!Array.isArray(a) || !a.length) ? "— (tidak dijawab)" : [...a].sort((p,q)=>p-q).map(k=>HURUF[k]+". "+s.options[k]).join("; ");
+  if (s.tipe === "bs") return (a === null || a === undefined) ? "— (tidak dijawab)" : (a ? "Benar" : "Salah");
+  if (s.tipe === "jodoh") return (!Array.isArray(a)) ? "— (tidak dijawab)" : s.items.map((it,k)=>{ const v=a[k]; return (k+1)+". "+it+" → "+((v===null||v===undefined||v==="")?"—":HURUF[v]+". "+s.options[v]); }).join("<br>");
+  if (s.tipe === "isian") return (typeof a !== "string" || !a.trim()) ? "— (tidak dijawab)" : a.trim();
+  return (a === null || a === undefined) ? "— (tidak dijawab)" : HURUF[a]+". "+s.options[a];
+}
+function kunciTeks(s){
+  if (s.tipe === "pgk") return [...s.kunci].sort((p,q)=>p-q).map(k=>HURUF[k]+". "+s.options[k]).join("; ");
+  if (s.tipe === "bs") return s.kunci ? "Benar" : "Salah";
+  if (s.tipe === "jodoh") return s.items.map((it,k)=>(k+1)+". "+it+" → "+HURUF[s.kunci[k]]+". "+s.options[s.kunci[k]]).join("<br>");
+  if (s.tipe === "isian") return s.kunci.join(" / ");
+  return HURUF[s.kunci]+". "+s.options[s.kunci];
+}
+let toastT = null;
+function toast(msg){
+  const t = document.getElementById("toast");
+  t.textContent = msg; t.classList.add("show");
+  clearTimeout(toastT); toastT = setTimeout(()=>t.classList.remove("show"), 2800);
+}
+function bagikanPaket(t, id, judul){
+  const link = location.href.split("?")[0] + "?kelas=" + t + "&paket=" + id;
+  const done = () => toast('Tautan ujian "' + judul + '" disalin. Bagikan ke siswa!');
+  const manual = () => {
+    const ta = document.createElement("textarea");
+    ta.value = link; ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand("copy"); done(); } catch(e){ prompt("Salin tautan ujian:", link); }
+    document.body.removeChild(ta);
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(link).then(done).catch(manual);
+  else manual();
+}
+
+/* ---- Dropdown Sekolah & Kelas (dengan opsi tambah baru, tersimpan lokal) ---- */
+const TAMBAH = "__tambah__";
+function getCustom(key) { try { return JSON.parse(localStorage.getItem(key) || "[]"); } catch(e){ return []; } }
+function saveCustom(key, val) {
+  const a = getCustom(key);
+  if (val && !a.includes(val)) { a.push(val); localStorage.setItem(key, JSON.stringify(a)); }
+}
+function isiDropdownSekolah() {
+  const sel = document.getElementById("in-sekolah");
+  const daftar = ["SMP Negeri 4 Majenang", ...getCustom("cbt_sekolah")];
+  sel.innerHTML = daftar.map(s => '<option value="' + s + '">' + s + "</option>").join("") +
+    '<option value="' + TAMBAH + '">＋ Tambah sekolah baru...</option>';
+  document.getElementById("in-sekolah-baru").classList.add("hidden");
+  document.getElementById("in-sekolah-baru").value = "";
+}
+function isiDropdownKelas() {
+  const sel = document.getElementById("in-kelas");
+  const bawaan = [];
+  ["7","8","9"].forEach(t => "ABCDEF".split("").forEach(h => bawaan.push(t + h)));
+  const daftar = [...bawaan, ...getCustom("cbt_kelas")];
+  sel.innerHTML = daftar.map(k => '<option value="' + k + '">' + k + "</option>").join("") +
+    '<option value="' + TAMBAH + '">＋ Tambah kelas baru...</option>';
+  document.getElementById("in-kelas-baru").classList.add("hidden");
+  document.getElementById("in-kelas-baru").value = "";
+}
+function nilaiDropdown(idSel, idBaru, key) {
+  const sel = document.getElementById(idSel);
+  if (sel.value === TAMBAH) {
+    const v = document.getElementById(idBaru).value.trim();
+    if (!v) return null;
+    saveCustom(key, v);
+    return v;
+  }
+  return sel.value;
+}
+document.getElementById("in-sekolah").addEventListener("change", e => {
+  document.getElementById("in-sekolah-baru").classList.toggle("hidden", e.target.value !== TAMBAH);
+});
+document.getElementById("in-kelas").addEventListener("change", e => {
+  document.getElementById("in-kelas-baru").classList.toggle("hidden", e.target.value !== TAMBAH);
+});
+isiDropdownSekolah();
+isiDropdownKelas();
+
+function pilihKelas(t) {
+  state.tingkat = t;
+  const bank = window["BANK_KELAS_" + t];
+  if (!bank || !bank.paket) {
+    alert("File bank-kelas-" + t + ".js tidak terbaca.\n\nPastikan ke-4 file ini ada dalam SATU folder yang sama (hasil ekstrak ZIP):\n- index.html\n- bank-kelas-7.js\n- bank-kelas-8.js\n- bank-kelas-9.js");
+    return;
+  }
+  document.getElementById("paket-judul").textContent = "Paket CBT " + bank.info.label;
+  const box = document.getElementById("daftar-paket");
+  box.innerHTML = "";
+  bank.paket.forEach((p, i) => {
+    const d = document.createElement("div");
+    d.className = "paket";
+    d.innerHTML = "<div><h3>" + (i+1) + ". " + p.judul + "</h3><p>" + p.deskripsi +
+      '</p><p class="tipe-info">Soal 1–3: PG Kompleks &bull; 4–6: Benar/Salah &bull; 7–8: Menjodohkan &bull; 9–10: Isian</p></div>';
+    const aksi = document.createElement("div");
+    aksi.className = "paket-aksi";
+    const b = document.createElement("button");
+    b.className = "btn"; b.textContent = "Kerjakan";
+    b.onclick = () => pilihPaket(p.id);
+    const sh = document.createElement("button");
+    sh.className = "btn-bagikan"; sh.textContent = "🔗 Bagikan";
+    sh.title = "Salin tautan ujian paket ini";
+    sh.onclick = (e) => { e.stopPropagation(); bagikanPaket(t, p.id, p.judul); };
+    aksi.appendChild(b); aksi.appendChild(sh);
+    d.appendChild(aksi);
+    box.appendChild(d);
+  });
+  show("screen-paket");
+}
+
+function pilihPaket(id) {
+  const bank = window["BANK_KELAS_" + state.tingkat];
+  state.paket = bank.paket.find(p => p.id === id);
+  document.getElementById("identitas-sub").textContent =
+    bank.info.label + " • " + state.paket.judul + " • 10 soal campuran (PG Kompleks, Benar/Salah, Menjodohkan, Isian) • 30 menit";
+  show("screen-identitas");
+}
+
+function acak(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function saveProgress() {
+  try {
+    localStorage.setItem("cbt_save", JSON.stringify({
+      tingkat: state.tingkat, paketId: state.paket.id,
+      nama: state.nama, sekolah: state.sekolah, kelas: state.kelasRombel,
+      exam: state.exam, answers: state.answers, flagged: state.flagged,
+      current: state.current, deadline: state.deadline, startTime: state.startTime
+    }));
+  } catch(e){}
+}
+function clearProgress() { try { localStorage.removeItem("cbt_save"); } catch(e){} }
+function loadProgress() { try { return JSON.parse(localStorage.getItem("cbt_save") || "null"); } catch(e){ return null; } }
+
+function setFont(lvl) {
+  state.fontLevel = lvl;
+  document.querySelector("#screen-ujian .soal-box").style.fontSize = ["0.95rem","1.08rem","1.25rem"][lvl+1];
+  document.querySelectorAll(".fontsize button").forEach((b, bi) => b.classList.toggle("aktif", bi === lvl+1));
+}
+
+function mulaiUjian() {
+  const nama = document.getElementById("in-nama").value.trim();
+  const sekolah = nilaiDropdown("in-sekolah", "in-sekolah-baru", "cbt_sekolah");
+  const kelas = nilaiDropdown("in-kelas", "in-kelas-baru", "cbt_kelas");
+  if (!nama) { alert("Isi nama lengkap dulu ya."); return; }
+  if (!sekolah) { alert("Pilih sekolah atau isi nama sekolah baru dulu ya."); return; }
+  if (!kelas) { alert("Pilih kelas atau isi kelas baru dulu ya."); return; }
+  state.nama = nama; state.sekolah = sekolah; state.kelasRombel = kelas;
+  const bank_info = window["BANK_KELAS_" + state.tingkat].info;
+  // Cek simpanan: lanjutkan bila ada progres paket+nama yang sama dan waktu belum habis
+  const saved = loadProgress();
+  if (saved && saved.tingkat === state.tingkat && saved.paketId === state.paket.id &&
+      saved.nama === nama && saved.deadline > Date.now() && Array.isArray(saved.exam) &&
+      saved.exam.length && saved.exam[0].tipe) {
+    if (confirm("Ditemukan jawaban tersimpan untuk paket ini. Lanjutkan?")) {
+      state.exam = saved.exam; state.answers = saved.answers; state.flagged = saved.flagged;
+      state.current = saved.current || 0; state.sudahKirim = false;
+      state.deadline = saved.deadline; state.startTime = saved.startTime || Date.now();
+      setExamHeader(bank_info);
+      buildNumgrid(); renderSoal(); setFont(0);
+      startTimer();
+      show("screen-ujian");
+      return;
+    }
+  }
+  clearProgress();
+  // acak urutan soal & opsi (kunci mengikuti), sesuai tipe soal
+  state.exam = acak([...state.paket.soal]).map(s => {
+    const tipe = s.tipe || "pg";
+    const dasar = { tipe: tipe, q: s.q, bahas: s.bahas, stimulus: s.stimulus || null };
+    if (tipe === "pgk") {
+      const idx = s.options.map((_, k) => k); acak(idx);
+      return Object.assign(dasar, { options: idx.map(k => s.options[k]),
+        kunci: s.kunci.map(k => idx.indexOf(k)).sort((a,b)=>a-b) });
+    }
+    if (tipe === "jodoh") {
+      const idx = s.options.map((_, k) => k); acak(idx);
+      return Object.assign(dasar, { items: s.items.slice(), options: idx.map(k => s.options[k]),
+        kunci: s.kunci.map(k => idx.indexOf(k)) });
+    }
+    if (tipe === "bs") return Object.assign(dasar, { kunci: !!s.kunci });
+    if (tipe === "isian") return Object.assign(dasar, { kunci: s.kunci.slice() });
+    const idx = s.options.map((_, k) => k); acak(idx);
+    return Object.assign(dasar, { options: idx.map(k => s.options[k]), kunci: idx.indexOf(s.kunci) });
+  });
+  const n = state.exam.length;
+  state.answers = state.exam.map(s =>
+    s.tipe === "pgk" ? [] : s.tipe === "jodoh" ? new Array(s.items.length).fill(null) : s.tipe === "isian" ? "" : null);
+  state.flagged = new Array(n).fill(false);
+  state.current = 0; state.sudahKirim = false;
+  state.startTime = Date.now();
+  state.deadline = Date.now() + CONFIG.WAKTU_MENIT * 60 * 1000;
+  setExamHeader(bank_info);
+  buildNumgrid(); renderSoal(); setFont(0); startTimer(); saveProgress();
+  show("screen-ujian");
+}
+
+function setExamHeader(bank_info) {
+  document.getElementById("exam-judul").textContent = state.paket.judul;
+  document.getElementById("exam-tingkat").innerHTML = "KELAS " + state.tingkat +
+    "<small>" + state.nama + " • " + state.kelasRombel + "</small>";
+}
+
+function buildNumgrid() {
+  const g = document.getElementById("numgrid");
+  g.innerHTML = "";
+  state.exam.forEach((_, i) => {
+    const b = document.createElement("button");
+    b.className = "num"; b.textContent = i + 1; b.id = "num-" + i;
+    b.onclick = () => { state.current = i; renderSoal(); };
+    g.appendChild(b);
+  });
+}
+
+function refreshNumgrid() {
+  state.exam.forEach((_, i) => {
+    const b = document.getElementById("num-" + i);
+    b.className = "num" + (i === state.current ? " current" : "")
+      + (state.flagged[i] ? " flagged" : (isAnswered(i) ? " done" : ""));
+  });
+}
+
+function renderSoal() {
+  const i = state.current, s = state.exam[i], n = state.exam.length;
+  document.getElementById("soal-nomor").textContent = "SOAL NOMOR: " + (i+1);
+  document.querySelector(".tipe-badge").textContent = TIPE_LABEL[s.tipe] || "Soal";
+  const st = document.getElementById("stimulus-box");
+  if (s.stimulus) {
+    st.innerHTML = '<div class="stim-label">STIMULUS</div><div>' + s.stimulus + "</div>";
+    st.className = "stimulus"; st.style.display = "";
+  } else { st.style.display = "none"; st.innerHTML = ""; }
+  document.getElementById("soal-teks").textContent = s.q;
+  const box = document.getElementById("soal-opsi");
+  box.innerHTML = "";
+  if (s.tipe === "pgk") {
+    const ins = document.createElement("div");
+    ins.className = "instruksi"; ins.innerHTML = "Pilih <b>semua</b> jawaban yang benar.";
+    box.appendChild(ins);
+    s.options.forEach((op, j) => {
+      const on = Array.isArray(state.answers[i]) && state.answers[i].indexOf(j) >= 0;
+      const b = document.createElement("button");
+      b.className = "opsi" + (on ? " pilih" : "");
+      b.innerHTML = '<span class="kotak">' + (on ? "&#10003;" : "") + "</span>" + op;
+      b.onclick = () => {
+        let arr = Array.isArray(state.answers[i]) ? state.answers[i].slice() : [];
+        arr = arr.indexOf(j) >= 0 ? arr.filter(k => k !== j) : arr.concat([j]);
+        state.answers[i] = arr; saveProgress(); renderSoal();
+      };
+      box.appendChild(b);
+    });
+  } else if (s.tipe === "bs") {
+    const ins = document.createElement("div");
+    ins.className = "instruksi"; ins.innerHTML = "Tentukan apakah pernyataan berikut <b>Benar</b> atau <b>Salah</b>.";
+    box.appendChild(ins);
+    [["Benar", true, "B"], ["Salah", false, "S"]].forEach(cfg => {
+      const b = document.createElement("button");
+      b.className = "opsi" + (state.answers[i] === cfg[1] ? " pilih" : "");
+      b.innerHTML = '<span class="huruf">' + cfg[2] + "</span>" + cfg[0];
+      b.onclick = () => { state.answers[i] = cfg[1]; saveProgress(); renderSoal(); };
+      box.appendChild(b);
+    });
+  } else if (s.tipe === "jodoh") {
+    const ins = document.createElement("div");
+    ins.className = "instruksi"; ins.innerHTML = "Pasangkan setiap item di kolom kiri dengan jawaban yang sesuai di kolom kanan.";
+    box.appendChild(ins);
+    s.items.forEach((it, k) => {
+      const row = document.createElement("div");
+      row.className = "jodoh-row";
+      const lab = document.createElement("div");
+      lab.className = "jodoh-item";
+      lab.innerHTML = "<b>" + (k+1) + ".</b> " + it;
+      const sel = document.createElement("select");
+      sel.className = "jodoh-select";
+      sel.innerHTML = '<option value="">— Pilih —</option>' + s.options.map((op, j) => '<option value="' + j + '">' + HURUF[j] + ". " + op + "</option>").join("");
+      const cur = (Array.isArray(state.answers[i])) ? state.answers[i][k] : null;
+      if (cur !== null && cur !== undefined && cur !== "") sel.value = String(cur);
+      sel.onchange = () => {
+        if (!Array.isArray(state.answers[i])) state.answers[i] = new Array(s.items.length).fill(null);
+        state.answers[i][k] = sel.value === "" ? null : parseInt(sel.value, 10);
+        saveProgress(); refreshNumgrid();
+      };
+      row.appendChild(lab); row.appendChild(sel);
+      box.appendChild(row);
+    });
+  } else if (s.tipe === "isian") {
+    const ins = document.createElement("div");
+    ins.className = "instruksi"; ins.innerHTML = "Ketik jawaban singkat pada kolom berikut.";
+    box.appendChild(ins);
+    const inp = document.createElement("input");
+    inp.className = "isian-input";
+    inp.placeholder = "Ketik jawaban di sini...";
+    inp.value = (typeof state.answers[i] === "string") ? state.answers[i] : "";
+    inp.oninput = () => { state.answers[i] = inp.value; saveProgress(); refreshNumgrid(); };
+    box.appendChild(inp);
+  } else {
+    s.options.forEach((op, j) => {
+      const b = document.createElement("button");
+      b.className = "opsi" + (state.answers[i] === j ? " pilih" : "");
+      b.innerHTML = '<span class="huruf">' + HURUF[j] + "</span>" + op;
+      b.onclick = () => { state.answers[i] = j; saveProgress(); renderSoal(); };
+      box.appendChild(b);
+    });
+  }
+  const rb = document.getElementById("btn-ragu");
+  rb.classList.toggle("aktif", state.flagged[i]);
+  rb.innerHTML = (state.flagged[i] ? "&#9745;" : "&#9744;") + " Ragu-ragu";
+  document.getElementById("btn-prev").disabled = (i === 0);
+  document.getElementById("btn-next").disabled = (i === n - 1);
+  refreshNumgrid();
+}
+
+function pindahSoal(d) {
+  const n = state.exam.length;
+  state.current = Math.min(n-1, Math.max(0, state.current + d));
+  saveProgress();
+  renderSoal();
+}
+function toggleRaguBtn() {
+  state.flagged[state.current] = !state.flagged[state.current];
+  saveProgress();
+  renderSoal();
+}
+
+function startTimer() {
+  const el = document.getElementById("timer");
+  const pill = document.getElementById("timer-pill");
+  pill.classList.remove("warn");
+  clearInterval(state.timerId);
+  const tick = () => {
+    const sisa = Math.max(0, Math.round((state.deadline - Date.now()) / 1000));
+    el.textContent = String(Math.floor(sisa/60)).padStart(2,"0") + ":" + String(sisa%60).padStart(2,"0");
+    pill.classList.toggle("warn", sisa <= 300);
+    if (sisa === 300) alert("Sisa waktu 5 menit!");
+    if (sisa <= 0) { clearInterval(state.timerId); finishUjian(true); }
+  };
+  tick();
+  state.timerId = setInterval(tick, 1000);
+}
+
+function konfirmasiSelesai() {
+  const belum = state.answers.filter((_, k) => !isAnswered(k)).length;
+  const msg = belum > 0
+    ? "Masih ada " + belum + " soal belum dijawab. Tetap selesaikan?"
+    : "Selesaikan ujian sekarang?";
+  if (confirm(msg)) finishUjian(false);
+}
+
+function fmtDurasi(ms) {
+  const d = Math.round(ms/1000);
+  return Math.floor(d/60) + " mnt " + (d%60) + " dtk";
+}
+
+function finishUjian(otomatis) {
+  clearInterval(state.timerId);
+  clearProgress();
+  const n = state.exam.length;
+  let benar = 0;
+  state.exam.forEach((s, i) => { if (checkAnswer(s, state.answers[i])) benar++; });
+  const nilai = Math.round(benar / n * 100);
+  const durasiMs = Date.now() - state.startTime;
+  const jwbStr = state.exam.map((s, i) => jawabanStr(s, state.answers[i])).join(" | ");
+  const kncStr = state.exam.map(s => kunciStr(s)).join(" | ");
+
+  state.lastPayload = {
+    waktu: new Date().toISOString(),
+    nama: state.nama,
+    kelas: state.kelasRombel,
+    sekolah: state.sekolah,
+    tingkat: state.tingkat,
+    paket: state.paket.judul,
+    benar: benar, total: n, nilai: nilai,
+    durasi: fmtDurasi(durasiMs),
+    jawaban: jwbStr, kunci: kncStr
+  };
+
+  document.getElementById("hasil-sub").textContent =
+    state.nama + " • " + state.sekolah + " • Kelas " + state.kelasRombel + " • " + state.paket.judul +
+    (otomatis ? " • (waktu habis, otomatis dikumpulkan)" : "");
+  document.getElementById("hasil-nilai").textContent = nilai;
+  document.getElementById("st-benar").textContent = benar + "/" + n;
+  document.getElementById("st-salah").textContent = (n - benar) + "/" + n;
+  document.getElementById("st-durasi").textContent = fmtDurasi(durasiMs);
+
+  const box = document.getElementById("daftar-bahas");
+  box.innerHTML = "";
+  state.exam.forEach((s, i) => {
+    const ok = checkAnswer(s, state.answers[i]);
+    const det = document.createElement("details");
+    det.className = "bahas";
+    det.innerHTML = "<summary>Soal " + (i+1) + " <i style='font-weight:400;color:#64748b'>(" + (TIPE_LABEL[s.tipe] || "Soal") + ")</i>" +
+      '<span class="badge ' + (ok ? "benar" : "salah") + '">' + (ok ? "Benar" : "Salah") + "</span></summary>" +
+      "<p style='margin:8px 0'><b>" + s.q + "</b></p>" +
+      "<p>Jawaban kamu: <b>" + jawabanTeks(s, state.answers[i]) + "</b></p>" +
+      "<p>Kunci: <b>" + kunciTeks(s) + "</b></p>" +
+      "<p style='margin-top:6px;color:#475569'>" + s.bahas + "</p>";
+    box.appendChild(det);
+  });
+
+  show("screen-hasil");
+  kirimHasil();
+}
+
+function kirimHasil() {
+  const box = document.getElementById("status-kirim");
+  if (!CONFIG.WEB_APP_URL) {
+    box.className = "kirim-box err";
+    box.textContent = "⚠️ URL Web App belum dikonfigurasi (lihat PANDUAN.txt) — hasil tidak terkirim ke Google Sheets.";
+    return;
+  }
+  if (state.sudahKirim) return;
+  box.className = "kirim-box";
+  box.textContent = "⏳ Mengirim hasil ke Google Sheets...";
+  const fd = new FormData();
+  fd.append("data", JSON.stringify(state.lastPayload));
+  fetch(CONFIG.WEB_APP_URL, { method: "POST", body: fd })
+    .then(() => {
+      state.sudahKirim = true;
+      box.className = "kirim-box ok";
+      box.textContent = "✅ Hasil dikirim dan tersimpan di Google Sheets.";
+    })
+    .catch(() => {
+      box.className = "kirim-box err";
+      box.innerHTML = '❌ Gagal mengirim ke Google Sheets. <button class="btn secondary" style="padding:6px 14px;margin-left:8px;" onclick="kirimHasil()">Kirim Ulang</button>';
+    });
+}
+
+function kembaliPaket() { pilihKelas(state.tingkat); }
+
+(function(){
+  try {
+    const q = new URLSearchParams(location.search);
+    const t = q.get("kelas"), pid = q.get("paket");
+    if (t && pid && ["7","8","9"].indexOf(t) >= 0) {
+      const bank = window["BANK_KELAS_" + t];
+      if (bank && bank.paket.some(p => p.id === pid)) { pilihKelas(t); pilihPaket(pid); }
+    }
+  } catch(e){}
+})();
+</script>
+</body>
+</html>

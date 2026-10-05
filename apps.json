@@ -1,0 +1,56 @@
+[
+  {
+    "name": "Materi",
+    "description": "Ruang belajar untuk materi, modul, dan referensi yang disusun dengan rapi.",
+    "category": "Pembelajaran",
+    "icon": "✺",
+    "color": "mint",
+    "status": "Segera hadir",
+    "url": "materi/materi/"
+  },
+  {
+    "name": "Media Pembelajaran Interaktif",
+    "description": "Kuis interaktif dan permainan ringan untuk belajar sambil menguji pemahaman.",
+    "category": "Pembelajaran",
+    "icon": "?",
+    "color": "amber",
+    "status": "Segera hadir",
+    "url": "materi/media-pembelajaran-interaktif/"
+  },
+  {
+    "name": "Learning Manajemen Sistem",
+    "description": "Catatan proses dan prototipe kecil yang lahir dari rasa ingin tahu.",
+    "category": "Pembelajaran",
+    "icon": "✦",
+    "color": "violet",
+    "status": "Eksplorasi",
+    "url": "materi/learning-manajemen-sistem/"
+  },
+  {
+    "name": "Ragam Aplikasi",
+    "description": "Kumpulan aplikasi sederhana untuk berbagai kebutuhan digital sehari-hari.",
+    "category": "Aplikasi",
+    "icon": "⌘",
+    "color": "coral",
+    "status": "Dalam pengembangan",
+    "url": "materi/ragam-aplikasi/"
+  },
+  {
+    "name": "Ragam Aplikasi Administrasi Pembelajaran",
+    "description": "Kelola jadwal, pendataan, dan rekap secara praktis dengan data yang terhubung.",
+    "category": "Aplikasi",
+    "icon": "▦",
+    "color": "blue",
+    "status": "Segera hadir",
+    "url": "materi/ragam-aplikasi-administrasi-pembelajaran/"
+  },
+  {
+    "name": "Peta Ide",
+    "description": "Tempat untuk merangkum ide, menguji kemungkinan, dan menemukan arah baru.",
+    "category": "Proyek",
+    "icon": "⌁",
+    "color": "pink",
+    "status": "Eksplorasi",
+    "url": "materi/peta-ide/"
+  }
+]
