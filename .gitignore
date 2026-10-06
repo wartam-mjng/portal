@@ -18,8 +18,8 @@ coverage/
 .python-version
 
 # Backend Apps Script disimpan di Google Apps Script, bukan di static site
-materi/learning-manajemen-sistem/CBT/Kode_CBT.gs
-materi/learning-manajemen-sistem/CBT/PANDUAN.txt
-materi/learning-manajemen-sistem/TKA/Code.gs
-materi/learning-manajemen-sistem/TKA/PANDUAN.txt
+materi/asesmen/CBT/Kode_CBT.gs
+materi/asesmen/CBT/PANDUAN.txt
+materi/asesmen/TKA/Code.gs
+materi/asesmen/TKA/PANDUAN.txt
 materi/media-pembelajaran-interaktif/MPI/code.gs

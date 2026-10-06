@@ -36,7 +36,7 @@ Folder ini dapat langsung dipublikasikan sebagai static site di GitHub Pages. Ji
 
 ## Struktur isi materi
 
-Setiap kartu katalog mengarah ke foldernya sendiri di `materi/`. Contohnya `materi/materi/` dan `materi/ragam-aplikasi-administrasi-pembelajaran/`. Di dalam setiap folder terdapat:
+Setiap kartu katalog mengarah ke foldernya sendiri di `materi/`. Contohnya `materi/materi/` dan `materi/aplikasi-administrasi-pembelajaran/`. Di dalam setiap folder terdapat:
 
 - `index.html` sebagai halaman isi materi
 - `content.json` sebagai daftar file atau tautan

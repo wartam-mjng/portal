@@ -20,7 +20,7 @@ function renderCards() {
     <a class="app-card" href="${escapeHtml(app.url)}" target="_blank" rel="noopener noreferrer" aria-label="Buka ${escapeHtml(app.name)}" style="--delay: ${index * 45}ms">
       <div class="card-top"><span class="app-icon ${escapeHtml(app.color)}">${escapeHtml(app.icon)}</span><span class="card-category">${escapeHtml(app.category)}</span></div>
       <div class="card-body"><h3>${escapeHtml(app.name)}</h3><p>${escapeHtml(app.description)}</p></div>
-      <div class="card-bottom"><span class="card-status"><i></i>${escapeHtml(app.status)}</span><span class="card-link">Buka <span aria-hidden="true">↗</span></span></div>
+      <div class="card-bottom"><span class="card-link">Buka <span aria-hidden="true">↗</span></span></div>
     </a>`).join("");
   emptyState.hidden = visibleApps.length !== 0;
 }

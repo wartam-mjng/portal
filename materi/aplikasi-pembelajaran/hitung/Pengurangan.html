@@ -1,0 +1,2111 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terampil Hitung Cepat</title>
+<style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        transition: background 0.3s ease;
+        color: #333;
+    }
+    body.mode-game {
+        background: #f0f2f5;
+    }
+
+    .app-view { display: none; width: 100%; }
+    .app-view.active { display: contents; }
+
+    /* ===== Landing (menu utama) ===== */
+    #view-landing.active { display: flex; justify-content: center; width: 100%; }
+    #landing {
+        position: relative;
+        background: white;
+        border-radius: 24px;
+        padding: 45px 40px 40px;
+        max-width: 420px;
+        width: 100%;
+        text-align: center;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        animation: landingPop 0.5s ease;
+    }
+    @keyframes landingPop {
+        from { opacity: 0; transform: translateY(-16px) scale(0.97); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    #help-btn {
+        position: absolute;
+        top: 18px;
+        right: 18px;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: none;
+        background: #f0f2f5;
+        color: #667eea;
+        font-weight: 800;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background 0.2s ease;
+    }
+    #help-btn:hover { background: #e4e8f5; }
+
+    #help-arrow {
+        position: absolute;
+        top: 34px;
+        right: 52px;
+        width: 58px;
+        height: 42px;
+        pointer-events: none;
+        animation: arrowPoke 1.4s ease-in-out infinite;
+    }
+    @keyframes arrowPoke {
+        0%, 100% { transform: translate(0, 0); opacity: 0.75; }
+        50% { transform: translate(6px, -4px); opacity: 1; }
+    }
+
+    #logo-wrap {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 12px;
+    }
+    #app-logo {
+        width: 92px;
+        height: 92px;
+        filter: drop-shadow(0 8px 16px rgba(102, 126, 234, 0.35));
+        animation: logoFloat 3s ease-in-out infinite;
+    }
+    @keyframes logoFloat {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-6px); }
+    }
+
+    #landing h1 {
+        color: #333;
+        font-size: 26px;
+        margin-bottom: 8px;
+        letter-spacing: 0.5px;
+    }
+    #subtitle-pengurangan {
+        font-size: 30px;
+        font-weight: 900;
+        font-style: italic;
+        letter-spacing: 3px;
+        background: linear-gradient(135deg, #ff9800 0%, #e53935 60%, #764ba2 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        margin-bottom: 22px;
+        text-shadow: 1px 1px 0 rgba(0,0,0,0.05);
+    }
+    #landing p.sub {
+        color: #888;
+        font-size: 14px;
+        margin-bottom: 30px;
+    }
+    .menu-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+        padding: 18px;
+        margin-bottom: 18px;
+        border: none;
+        border-radius: 14px;
+        font-size: 19px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        color: white;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .menu-icon { font-size: 22px; }
+    .menu-btn:last-child { margin-bottom: 0; }
+    .menu-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+    #btn-mulai { background: linear-gradient(135deg, #28a87c 0%, #1e7a5c 100%); }
+    #btn-daftar { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+    #btn-peserta { background: linear-gradient(135deg, #ff9800 0%, #e65100 100%); }
+
+    /* ===== Popup Petunjuk ===== */
+    #petunjuk-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(20, 20, 30, 0.55);
+        backdrop-filter: blur(2px);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+    #petunjuk-overlay.active {
+        display: flex;
+        animation: overlayFade 0.25s ease;
+    }
+    @keyframes overlayFade {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    #petunjuk-modal {
+        background: white;
+        border-radius: 20px;
+        padding: 34px 30px 28px;
+        max-width: 400px;
+        width: 100%;
+        max-height: 88vh;
+        overflow-y: auto;
+        text-align: center;
+        box-shadow: 0 25px 70px rgba(0,0,0,0.4);
+        animation: landingPop 0.35s ease;
+    }
+    #petunjuk-icon {
+        font-size: 40px;
+        margin-bottom: 8px;
+    }
+    #petunjuk-modal h3 {
+        color: #333;
+        font-size: 20px;
+        margin-bottom: 18px;
+    }
+    #petunjuk-list {
+        text-align: left;
+        list-style: none;
+        counter-reset: step;
+        margin-bottom: 16px;
+    }
+    #petunjuk-list li {
+        counter-increment: step;
+        position: relative;
+        padding: 7px 0 7px 40px;
+        font-size: 14px;
+        color: #444;
+        line-height: 1.4;
+    }
+    #petunjuk-list li::before {
+        content: counter(step);
+        position: absolute;
+        left: 0;
+        top: 5px;
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        font-weight: 700;
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    #petunjuk-note {
+        font-size: 12.5px;
+        color: #e65100;
+        background: #fff3e0;
+        border-radius: 8px;
+        padding: 8px 12px;
+        margin-bottom: 20px;
+        text-align: left;
+    }
+    #petunjuk-close-btn {
+        width: 100%;
+        padding: 14px;
+        border: none;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #28a87c 0%, #1e7a5c 100%);
+        color: white;
+        font-size: 16px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+    }
+    #petunjuk-close-btn:hover { transform: translateY(-2px); }
+
+    /* ===== View: Lihat Peserta ===== */
+    #view-peserta.active {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+    #peserta-card {
+        background: white;
+        border-radius: 20px;
+        padding: 35px;
+        max-width: 480px;
+        width: 100%;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+    #peserta-card h2 {
+        color: #333;
+        font-size: 22px;
+        margin-bottom: 5px;
+    }
+    #peserta-card p.sub {
+        color: #888;
+        font-size: 13px;
+        margin-bottom: 20px;
+    }
+    #peserta-reload-btn {
+        background: #ff9800;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 10px 18px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        margin-bottom: 18px;
+    }
+    #peserta-reload-btn:hover { background: #f57c00; }
+    #peserta-status {
+        font-size: 14px;
+        color: #888;
+        margin-bottom: 12px;
+    }
+    #peserta-table-wrap {
+        max-height: 400px;
+        overflow-y: auto;
+        border: 1px solid #eee;
+        border-radius: 10px;
+    }
+    #peserta-table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+        font-size: 14px;
+    }
+    #peserta-table th {
+        background: #f5f5f5;
+        padding: 10px 12px;
+        position: sticky;
+        top: 0;
+        color: #555;
+        font-size: 13px;
+    }
+    #peserta-table td {
+        padding: 9px 12px;
+        border-top: 1px solid #f0f0f0;
+        color: #333;
+    }
+    #peserta-table tr:nth-child(even) td {
+        background: #fafafa;
+    }
+
+    /* Tombol kembali dipakai di view game & form */
+    .back-btn {
+        display: inline-block;
+        margin-bottom: 15px;
+        background: #333;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 8px 16px;
+        font-size: 14px;
+        cursor: pointer;
+        opacity: 0.85;
+    }
+    .back-btn:hover { opacity: 1; }
+
+    /* ===== Gaya khusus GAME (di-scope ke #view-game) ===== */
+
+#view-game /* ===== SEMUA CSS SAMA SEPERTI SEBELUMNYA ===== */
+
+    .container {
+        background-color: #bbc7f0;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        text-align: center;
+        max-width: 500px;
+        width: 100%;
+        box-sizing: border-box;
+        margin-bottom: 20px;
+        position: relative;
+        overflow: hidden;
+        transition: max-width 0.5s ease-in-out;
+    }
+
+#view-game .container.game-active {
+        max-width: 1000px;
+    }
+
+#view-game h1 {
+        color: #2105f2;
+        margin-bottom: 5px;
+        font-size: 1.8em;
+    }
+
+#view-game h2 {
+        color: #2105f2;
+        font-size: 1.2em;
+        margin-top: 5px;
+        margin-bottom: 20px;
+    }
+
+#view-game .screen {
+        display: none;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+#view-game .screen.active {
+        display: block;
+    }
+
+#view-game label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+        color: #555;
+        text-align: left;
+    }
+
+#view-game input[type="text"],
+#view-game input[type="number"],
+#view-game select {
+        width: calc(100% - 20px);
+        padding: 12px;
+        margin-bottom: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 1em;
+        box-sizing: border-box;
+    }
+
+#view-game .level-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+#view-game .level-button {
+        background-color: #28a87c;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.1em;
+        cursor: pointer;
+        transition: background-color 0.3s ease, opacity 0.3s ease;
+        flex: 1;
+        min-width: 120px;
+        box-sizing: border-box;
+    }
+
+#view-game .level-button:hover {
+        background-color: #a8284b;
+    }
+
+#view-game .level-button:disabled { 
+        background-color: #cccccc;
+        cursor: not-allowed;
+        opacity: 0.6;
+    }
+
+#view-game .level-button:disabled:hover {
+        background-color: #cccccc;
+    }
+
+#view-game button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 12px 25px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.1em;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        width: 100%;
+        box-sizing: border-box;
+        margin-top: 10px;
+    }
+
+#view-game button:hover {
+        background-color: #45a049;
+    }
+
+#view-game .footer {
+        text-align: center;
+        font-size: 0.9em;
+        color: red;
+        margin-top: 5px;
+    }
+
+#view-game .footer p {
+        margin: 5px 0;
+    }
+
+#view-game .game-layout-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 25px;
+        width: 100%;
+        text-align: left;
+    }
+
+#view-game .info-panel {
+        flex: 1;
+        min-width: 280px;
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+    }
+
+#view-game .info-panel h2 {
+        color: #F44336;
+        margin-top: 0;
+        text-align: left;
+        border-bottom: 2px solid #2105f2;
+        padding-bottom: 10px;
+        font-size: 1.5em;
+        margin-bottom: 25px;
+    }
+
+#view-game .info-panel .info {
+        font-size: 1.3em;
+        color: red;
+        margin-bottom: 20px;
+        font-weight: 500;
+    }
+
+#view-game .info-panel .info b {
+        color: blue;
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+#view-game .game-panel {
+        flex: 1.5;
+        min-width: 300px;
+        text-align: center;
+    }
+
+#view-game .question-area {
+        background-color: #e8f5e9;
+        padding: 25px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        border: 1px solid #d4edda;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        box-sizing: border-box;
+    }
+
+#view-game .question {
+        font-size: 2.2em;
+        font-weight: bold;
+        color: #2e7d32;
+        margin: 0;
+        flex-shrink: 0;
+    }
+
+#view-game .question-area input[type="text"] {
+        width: 120px;
+        text-align: center;
+        margin-bottom: 0;
+        flex-grow: 1;
+        font-size: 1.5em;
+        font-weight: bold;
+        pointer-events: none;
+        background-color: #fff;
+    }
+
+#view-game #submitAnswer {
+        margin: 0;
+        display: block;
+        background-color: #4CAF50;
+        font-size: 1.2em;
+        padding: 15px;
+    }
+
+#view-game #submitAnswer:hover {
+        background-color: #45a049;
+    }
+
+#view-game #submitAnswer {
+        display: block;
+        background-color: #2196F3;
+        font-size: 1.2em;
+        padding: 15px;
+    }
+
+#view-game #submitAnswer:hover {
+        background-color: #1976D2;
+    }
+
+#view-game #score-submit-container {
+        display: flex;
+        gap: 10px;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+#view-game #score-submit-container > * {
+        box-sizing: border-box;
+    }
+
+#view-game #submitAnswer {
+        flex: 1 1 auto;
+        min-width: 0;
+    }
+
+#view-game #score-container {
+        flex: 0 0 120px;
+        min-width: 120px;
+        background-color: #F44336;
+        color: white;
+        padding: 15px 10px;
+        border-radius: 8px;
+        font-size: 1.2em;
+        font-weight: bold;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        margin-top: 0;
+        margin-bottom: 0;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        white-space: nowrap;
+        gap: 4px;
+    }
+
+#view-game #score-container #score {
+        display: inline-block;
+    }
+
+#view-game #keypad-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        width: 100%;
+        margin: 0;
+        padding: 10px;
+        background-color: #fdeaea;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+
+#view-game .keypad-btn {
+        padding: 15px;
+        font-size: 1.2em;
+        font-weight: bold;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        background-color: #ffffff;
+        color: #0a0808;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        transition: transform 0.1s ease;
+    }
+
+#view-game .keypad-btn:active {
+        transform: translateY(2px);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+#view-game .keypad-btn[data-key="C"] {
+        background-color: #ffffff;
+        color: #0a0808;
+    }
+
+#view-game .keypad-btn[data-key="Backspace"] {
+        background-color: #ffffff;
+        color: #0a0808;
+    }
+
+#view-game .keypad-btn[data-key="."],
+#view-game .keypad-btn[data-key=","],
+#view-game .keypad-btn[data-key="-"] {
+        background-color: #ffffff;
+        color: #0a0808;
+    }
+
+#view-game .feedback {
+        margin: 15px 0;
+        padding: 10px;
+        font-weight: bold;
+        font-size: 1.1em;
+        text-align: center;
+        min-height: 20px;
+        transition: all 0.3s ease;
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+#view-game .feedback.correct {
+        color: #28a745;
+        background-color: #d4edda;
+        border: 1px solid #c3e6cb;
+        border-radius: 5px;
+        animation: pulseCorrect 0.5s ease;
+    }
+
+#view-game .feedback.incorrect {
+        color: #dc3545;
+        background-color: #f8d7da;
+        border: 1px solid #f5c6cb;
+        border-radius: 5px;
+        animation: pulseIncorrect 0.5s ease;
+    }
+
+
+    @keyframes pulseCorrect {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+
+    @keyframes pulseIncorrect {
+        0% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        50% { transform: translateX(5px); }
+        75% { transform: translateX(-5px); }
+        100% { transform: translateX(0); }
+    }
+#view-game button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
+#view-game .debug-button {
+        background-color: #ff9800;
+        color: white;
+        padding: 8px 15px;
+        border: none;
+        border-radius: 5px;
+        font-size: 0.9em;
+        cursor: pointer;
+        margin: 10px 0;
+    }
+
+#view-game .debug-button:hover {
+        background-color: #e68900;
+    }
+
+#view-game .status-badge {
+        display: inline-block;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 0.8em;
+        margin-left: 10px;
+    }
+
+#view-game .status-badge.success {
+        background-color: #d4edda;
+        color: #155724;
+    }
+
+#view-game .status-badge.error {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+
+#view-game .status-badge.loading {
+        background-color: #fff3cd;
+        color: #856404;
+    }
+
+    
+    @media (max-width: 850px) {
+#view-game .container.game-active {
+            max-width: 500px;
+        }
+
+#view-game .game-layout-container {
+            flex-direction: column;
+        }
+
+#view-game .info-panel {
+            width: 100%;
+            min-width: unset;
+        }
+
+#view-game .game-panel {
+            width: 100%;
+            min-width: unset;
+        }
+
+#view-game .info-panel .info b {
+            display: inline-block;
+            margin-bottom: 0;
+            margin-right: 5px;
+            width: 110px;
+        }
+
+#view-game .question-area input[type="text"] {
+            width: calc(100% - 10px);
+        }
+
+    }
+
+    @media (max-width: 600px) {
+#view-game .container {
+            padding: 20px;
+            margin: 10px;
+        }
+
+#view-game h1 { font-size: 1.5em; }
+
+#view-game .level-button {
+            flex: none;
+            width: calc(50% - 15px);
+        }
+
+#view-game .question { font-size: 1.8em; }
+
+    }
+
+
+    /* ===== Gaya khusus FORM (di-scope ke #view-form) ===== */
+
+#view-form .form-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+#view-form .form-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+#view-form .form-header h1 {
+            color: #333;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+#view-form .form-header p {
+            color: #888;
+            font-size: 14px;
+        }
+
+#view-form .form-group {
+            margin-bottom: 25px;
+        }
+
+#view-form .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+#view-form .form-group label .required {
+            color: #e74c3c;
+            margin-left: 3px;
+        }
+
+#view-form .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            outline: none;
+            font-family: inherit;
+        }
+
+#view-form .form-group input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+#view-form .form-group input::placeholder {
+            color: #aaa;
+        }
+
+#view-form .form-group input.error {
+            border-color: #e74c3c;
+            background-color: #fff5f5;
+        }
+
+#view-form .error-message {
+            color: #e74c3c;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+#view-form .error-message.show {
+            display: block;
+        }
+
+#view-form .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            letter-spacing: 0.5px;
+        }
+
+#view-form .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+#view-form .btn-submit:active {
+            transform: translateY(0);
+        }
+
+#view-form .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+#view-form .btn-submit.loading {
+            position: relative;
+            color: transparent;
+        }
+
+#view-form .btn-submit.loading::after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            border: 3px solid white;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+
+        @keyframes spin {
+            to {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+#view-form .status-message {
+            margin-top: 20px;
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-weight: 600;
+            text-align: center;
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+#view-form .status-message.success {
+            display: block;
+            background: #d4edda;
+            color: #155724;
+            border: 2px solid #c3e6cb;
+        }
+
+#view-form .status-message.error {
+            display: block;
+            background: #f8d7da;
+            color: #721c24;
+            border: 2px solid #f5c6cb;
+        }
+
+#view-form .status-message.info {
+            display: block;
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 2px solid #bee5eb;
+        }
+
+#view-form .reset-link {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+#view-form .reset-link:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+
+#view-form .form-footer {
+            margin-top: 20px;
+            text-align: center;
+            color: #aaa;
+            font-size: 12px;
+        }
+
+
+        @media (max-width: 480px) {
+#view-form .form-container {
+                padding: 25px;
+            }
+
+#view-form .form-header h1 {
+                font-size: 22px;
+            }
+
+#view-form .form-group input {
+                padding: 10px 14px;
+                font-size: 15px;
+            }
+
+        }
+    
+</style>
+</head>
+<body id="body-root">
+
+    <div id="view-landing" class="app-view active">
+        <div id="landing">
+            <button id="help-btn" onclick="showPetunjuk()" title="Lihat petunjuk">?</button>
+            <svg id="help-arrow" viewBox="0 0 70 50" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 40 L 56 10" stroke="#e53935" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-dasharray="6 5"/>
+                <path d="M48 22 L 56 10 L 42 11" stroke="#e53935" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div id="logo-wrap">
+                <svg id="app-logo" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="60" cy="60" r="58" fill="url(#logoGrad)"/>
+                    <rect x="30" y="34" width="60" height="52" rx="8" fill="#ffffff" opacity="0.95"/>
+                    <rect x="36" y="41" width="48" height="14" rx="3" fill="#3949ab"/>
+                    <text x="60" y="51.5" font-family="Segoe UI, sans-serif" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle">123</text>
+                    <circle cx="43" cy="65" r="5" fill="#28a87c"/>
+                    <circle cx="60" cy="65" r="5" fill="#ff9800"/>
+                    <circle cx="77" cy="65" r="5" fill="#667eea"/>
+                    <circle cx="43" cy="78" r="5" fill="#667eea"/>
+                    <circle cx="60" cy="78" r="5" fill="#28a87c"/>
+                    <circle cx="77" cy="78" r="5" fill="#ff9800"/>
+                    <defs>
+                        <linearGradient id="logoGrad" x1="0" y1="0" x2="1" y2="1">
+                            <stop offset="0%" stop-color="#764ba2"/>
+                            <stop offset="100%" stop-color="#667eea"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+            <h1>TERAMPIL BERHITUNG</h1>
+            <div id="subtitle-pengurangan">PENGURANGAN</div>
+            <button id="btn-mulai" class="menu-btn" onclick="goToView('game')"><span class="menu-icon">🚀</span>MULAI</button>
+            <button id="btn-daftar" class="menu-btn" onclick="goToView('form')"><span class="menu-icon">📝</span>DAFTAR</button>
+            <button id="btn-peserta" class="menu-btn" onclick="goToView('peserta')"><span class="menu-icon">👥</span>PESERTA</button>
+        </div>
+    </div>
+
+    <div id="petunjuk-overlay" onclick="if(event.target===this) closePetunjuk()">
+        <div id="petunjuk-modal">
+            <div id="petunjuk-icon">💡</div>
+            <h3>Petunjuk Penggunaan</h3>
+            <ol id="petunjuk-list">
+                <li>Jika baru menggunakan aplikasi, silakan klik menu <b>DAFTAR</b></li>
+                <li>Setelah data dikirim, tunggu beberapa saat</li>
+                <li>Selanjutnya cek di menu <b>PESERTA</b>, pastikan nama sudah tercantum</li>
+                <li>Anda boleh memulai dengan menekan tombol <b>MULAI</b> jika nama Anda memang sudah tercantum (akan membutuhkan waktu maksimal 15 detik dan jangan lupa untuk merefresh halaman jika nama belum muncul)</li>
+                <li>Jika di lain waktu Anda membuka kembali aplikasi ini, Anda bisa langsung menekan tombol <b>MULAI</b></li>
+            </ol>
+            <p id="petunjuk-note">Catatan: koneksi internet sangat berpengaruh.</p>
+            <button id="petunjuk-close-btn" onclick="closePetunjuk()">Mengerti, Lanjutkan</button>
+        </div>
+    </div>
+
+    <div id="view-game" class="app-view">
+        <button class="back-btn" onclick="goToView('landing')">&larr; Kembali</button>
+        <div class="container" id="main-container">
+        <h1>PENGURANGAN CEPAT</h1>
+        <h2>Berhitung cepat, Anda lebih hebat!</h2>
+
+        <!-- Status Koneksi -->
+        <div id="connection-status" style="margin-bottom: 10px; font-size: 0.9em;">
+            Status: <span id="status-text" class="status-badge loading">Memuat...</span>
+        </div>
+
+        <div id="start-screen" class="screen active">
+            <label for="playerName">Nama</label>
+            <select id="playerName">
+                <option value="" selected> Pilih Nama </option>
+            </select>
+
+            <label for="playerSchool">Sekolah</label>
+            <select id="playerSchool">
+                <option value="" selected> Pilih Sekolah </option>
+            </select>
+
+            <div style="text-align: center;">
+                <button class="debug-button" onclick="debugStructure()" style="display: none;">Debug Structure</button>
+            </div>
+
+            <label>Silakan Pilih Paket Soal</label>
+            <div class="level-buttons">
+                <button class="level-button" data-level="1">Paket 1</button>
+                <button class="level-button" data-level="2">Paket 2</button>
+                <button class="level-button" data-level="3">Paket 3</button>
+                <button class="level-button" data-level="4">Paket 4</button>
+                <button class="level-button" data-level="5">Paket 5</button>
+            </div>
+        </div>
+
+        <div id="game-screen" class="screen">
+            <div class="game-layout-container">
+                <div class="info-panel">
+                    <h2>Keterangan</h2>
+                    <p class="info"><b>Nama</b> <span id="displayPlayerName"></span></p>
+                    <p class="info"><b>Asal Sekolah</b> <span id="displayPlayerSchool"></span></p>
+                    <p class="info"><b>Paket Soal</b> <span id="displaySelectedLevel"></span></p>
+                    <p class="info"><b>Sisa waktu</b> <span id="timer"></span></p>
+                </div>
+                
+                <div class="game-panel">
+                    <div class="question-area">
+                        <p class="question"><span id="number1"></span> − <span id="number2"></span> = </p>
+                        <input type="text" id="playerAnswer" placeholder="Jawaban Anda" readonly>
+                    </div>
+
+                    <div id="score-submit-container">
+                        <button id="submitAnswer">Cek Jawaban</button>
+                        <div id="score-container">SKOR &nbsp <span id="score">0</span></div>
+                    </div>
+                    
+                    <p id="feedback" class="feedback"></p>
+
+                    <div id="keypad-container">
+                        <button class="keypad-btn" data-key="1">1</button>
+                        <button class="keypad-btn" data-key="2">2</button>
+                        <button class="keypad-btn" data-key="3">3</button>
+                        <button class="keypad-btn" data-key="4">4</button>
+                        <button class="keypad-btn" data-key="5">5</button>
+                        <button class="keypad-btn" data-key="6">6</button>
+                        <button class="keypad-btn" data-key="7">7</button>
+                        <button class="keypad-btn" data-key="8">8</button>
+                        <button class="keypad-btn" data-key="9">9</button>
+                        <button class="keypad-btn" data-key="0">0</button>
+                        <button class="keypad-btn" data-key="-">-</button>
+                        <button class="keypad-btn" data-key="C">C</button>
+                        <button class="keypad-btn" data-key="Backspace">⌫</button>
+                        <button class="keypad-btn" data-key=".">.</button>
+                        <button class="keypad-btn" data-key=",">,</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="end-screen" class="screen">
+            <h2>Waktu Habis</h2>
+            <p><b><span id="finalPlayerName"></span> -- <span id="finalPlayerSchool"></span>--</b></p>
+            <p>Skor akhir Anda adalah <b><span id="finalScore"></span></b></p>
+            <p>Anda saat ini bermain di Paket Soal <span id="finalSelectedLevel"></span></p>
+            <p><b><i>Semangat belajar untuk meraih sukses</i></b></p>
+            <button id="restartButton">Main Lagi</button>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>@2026</p>
+        <p>Created By Wartam - SMPN 4 Majenang</p>
+    </div>
+    </div>
+
+    <div id="view-form" class="app-view">
+        <button class="back-btn" onclick="goToView('landing')">&larr; Kembali</button>
+        <div class="form-container">
+        <div class="form-header">
+            <h1>📋 Form Pendaftaran</h1>
+            <p>Silakan isi data diri Anda di bawah ini</p>
+        </div>
+
+        <form id="registrationForm" onsubmit="handleSubmit(event)">
+            <div class="form-group">
+                <label for="nama">
+                    Nama Lengkap <span class="required">*</span>
+                </label>
+                <input 
+                    type="text" 
+                    id="nama" 
+                    name="nama" 
+                    placeholder="Masukkan nama lengkap Anda"
+                    required
+                    autocomplete="name"
+                >
+                <div class="error-message" id="namaError">Nama tidak boleh kosong</div>
+            </div>
+
+            <div class="form-group">
+                <label for="sekolah">
+                    Asal Sekolah <span class="required">*</span>
+                </label>
+                <input 
+                    type="text" 
+                    id="sekolah" 
+                    name="sekolah" 
+                    placeholder="Masukkan nama sekolah Anda"
+                    required
+                    autocomplete="organization"
+                >
+                <div class="error-message" id="sekolahError">Sekolah tidak boleh kosong</div>
+            </div>
+
+            <button type="submit" class="btn-submit" id="submitBtn">Kirim Data</button>
+
+            <div class="status-message" id="statusMessage"></div>
+            
+            <a class="reset-link" onclick="resetForm()">↻ Isi ulang form</a>
+        </form>
+
+        <div class="form-footer">
+            Data akan disimpan ke Google Sheets
+        </div>
+    </div>
+    </div>
+
+    <div id="view-peserta" class="app-view">
+        <div id="peserta-card">
+            <button class="back-btn" onclick="goToView('landing')">&larr; Kembali</button>
+            <h2>Daftar Peserta</h2>
+            <p class="sub">Data nama & sekolah dari Google Sheet</p>
+            <button id="peserta-reload-btn" onclick="loadPesertaList(true)">&#8635; Muat Ulang</button>
+            <p id="peserta-status">Memuat data...</p>
+            <div id="peserta-table-wrap">
+                <table id="peserta-table">
+                    <thead>
+                        <tr><th>No</th><th>Nama</th><th>Sekolah</th></tr>
+                    </thead>
+                    <tbody id="peserta-table-body"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+<script>
+function goToView(name) {
+    document.querySelectorAll('.app-view').forEach(el => el.classList.remove('active'));
+    document.getElementById('view-' + name).classList.add('active');
+    document.body.classList.toggle('mode-game', name === 'game');
+    if (name === 'peserta') {
+        loadPesertaList();
+    }
+}
+
+function showPetunjuk() {
+    document.getElementById('petunjuk-overlay').classList.add('active');
+}
+
+function closePetunjuk() {
+    document.getElementById('petunjuk-overlay').classList.remove('active');
+}
+
+function loadPesertaList(force) {
+    const statusEl = document.getElementById('peserta-status');
+    const tbody = document.getElementById('peserta-table-body');
+    statusEl.textContent = 'Memuat data...';
+    tbody.innerHTML = '';
+
+    // Menggunakan fungsi getParticipantList() dari Apps Script
+    // (memerlukan penambahan fungsi ini di kode GAS, lihat file terpisah)
+    jsonpRequest('getParticipantList', { force: !!force })
+        .then(data => {
+            if (!data || data.length === 0) {
+                statusEl.textContent = 'Belum ada data peserta.';
+                return;
+            }
+            statusEl.textContent = 'Total: ' + data.length + ' peserta';
+            data.forEach((row, index) => {
+                const tr = document.createElement('tr');
+                const name = (row[0] || '').toString();
+                const school = (row[1] || '').toString();
+                tr.innerHTML = '<td>' + (index + 1) + '</td><td></td><td></td>';
+                tr.children[1].textContent = name;
+                tr.children[2].textContent = school;
+                tbody.appendChild(tr);
+            });
+        })
+        .catch(error => {
+            console.error('Gagal memuat daftar peserta:', error);
+            statusEl.textContent = 'Gagal memuat data: ' + error.message;
+        });
+}
+</script>
+
+<script>
+// ================= SCRIPT GAME (Pengurangan Cepat) =================
+
+        // ================================================================
+        // [PENTING] URL Web App Google Apps Script
+        // GANTI DENGAN URL WEB APP ANDA SETELAH DEPLOY
+        // ================================================================
+        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxlmdQCiRtq-CAndEsD5IGndr8lLHG5lqro9W1vXx1id9WoJEbP8u-cDjcD5kMdTxLd/exec';
+
+        // ================================================================
+        // FUNGSI JSONP - Cara paling reliable untuk mengatasi CORS
+        // ================================================================
+        let jsonpCounter = 0;
+
+        function jsonpRequest(functionName, params = {}) {
+            return new Promise((resolve, reject) => {
+                const callbackName = 'jsonp_callback_' + (++jsonpCounter);
+                const script = document.createElement('script');
+                let timeout = null;
+                
+                // Helper pembersihan terpusat
+                const cleanup = () => {
+                    if (timeout) clearTimeout(timeout);
+                    if (window[callbackName]) delete window[callbackName];
+                    if (script && script.parentNode) {
+                        script.parentNode.removeChild(script);
+                    }
+                };
+                
+                // Buat URL dengan parameter
+                const url = new URL(WEB_APP_URL);
+                url.searchParams.append('function', functionName);
+                url.searchParams.append('params', JSON.stringify(params));
+                url.searchParams.append('callback', callbackName);
+                
+                // Definisikan callback global
+                window[callbackName] = function(response) {
+                    cleanup();
+                    
+                    if (response && response.success) {
+                        resolve(response.data);
+                    } else {
+                        reject(new Error((response && response.error) || 'Unknown error'));
+                    }
+                };
+                
+                // Set timeout untuk error
+                timeout = setTimeout(() => {
+                    cleanup();
+                    reject(new Error('Request timeout'));
+                }, 30000);
+                
+                // Load script
+                script.src = url.toString();
+                script.onerror = function() {
+                    cleanup();
+                    reject(new Error('Failed to load script'));
+                };
+                
+                document.body.appendChild(script);
+            });
+        }
+
+        // ================================================================
+        // FUNGSI WRAPPER UNTUK SETIAP FUNGSI BACKEND
+        // ================================================================
+        function getInitialData() {
+            return jsonpRequest('getInitialData', {});
+        }
+
+        function preloadAllLevelsData() {
+            return jsonpRequest('preloadAllLevelsData', {});
+        }
+
+        function getGameDuration() {
+            return jsonpRequest('getGameDuration', {});
+        }
+
+        function getMultiplicationData(level) {
+            return jsonpRequest('getMultiplicationData', { level: level });
+        }
+
+        function getUserProgress(name, school) {
+            return jsonpRequest('getUserProgress', { name: name, school: school });
+        }
+
+        function saveUserResult(resultData) {
+            return jsonpRequest('saveUserResult', { resultData: resultData });
+        }
+
+        function debugSpreadsheetStructure() {
+            return jsonpRequest('debugSpreadsheetStructure', {});
+        }
+
+        // ================================================================
+        // KODE APLIKASI UTAMA
+        // ================================================================
+
+        // Elemen UI
+        const container = document.getElementById('main-container');
+        const startScreen = document.getElementById('start-screen');
+        const gameScreen = document.getElementById('game-screen');
+        const endScreen = document.getElementById('end-screen');
+
+        const playerNameSelect = document.getElementById('playerName');
+        const playerSchoolSelect = document.getElementById('playerSchool');
+        const levelButtons = document.querySelectorAll('.level-button');
+        const displayPlayerName = document.getElementById('displayPlayerName');
+        const displayPlayerSchool = document.getElementById('displayPlayerSchool');
+        const displaySelectedLevel = document.getElementById('displaySelectedLevel');
+        const timerDisplay = document.getElementById('timer');
+        const number1Display = document.getElementById('number1');
+        const number2Display = document.getElementById('number2');
+        const playerAnswerInput = document.getElementById('playerAnswer');
+        const submitAnswerButton = document.getElementById('submitAnswer');
+        const feedbackDisplay = document.getElementById('feedback');
+        const scoreDisplay = document.getElementById('score');
+        const finalScoreDisplay = document.getElementById('finalScore');
+        const finalPlayerNameDisplay = document.getElementById('finalPlayerName');
+        const finalPlayerSchoolDisplay = document.getElementById('finalPlayerSchool');
+        const finalSelectedLevelDisplay = document.getElementById('finalSelectedLevel');
+        const restartButton = document.getElementById('restartButton');
+
+        // Variabel Game
+        let playerName = '';
+        let playerSchool = '';
+        let selectedLevel = 0;
+        let score = 0;
+        let timer;
+        const DEFAULT_GAME_DURATION = 90;
+        let gameDuration = DEFAULT_GAME_DURATION;
+        let timeLeft = gameDuration;
+        let currentQuestion = { num1: 0, num2: 0 };
+        let allMultiplicationData = [];
+        let gameStartTime;
+        let currentQuestionIndex = 0;
+        let highestUnlockedLevel = 0;
+        let preloadedData = {};
+        let isChecking = false;
+
+        function loadGameSettings() {
+            getGameDuration().then(duration => {
+                const value = Number(duration);
+                if (Number.isFinite(value) && value >= 10 && value <= 600) {
+                    gameDuration = Math.floor(value);
+                    timeLeft = gameDuration;
+                    updateTimerDisplay();
+                }
+            }).catch(error => console.error('Gagal memuat pengaturan durasi:', error));
+        }
+
+        // Peta/Relasi antara Nama dan Sekolah dari Database
+        let studentSchoolMap = {}; // { "Ahmad Zaini": "SMP Negeri 4 Majenang", ... }
+
+        // Helper untuk ekstrak teks murni jika data bertipe Array 2D
+        function parseCleanString(item) {
+            if (Array.isArray(item)) {
+                return item[0] ? String(item[0]).trim() : '';
+            }
+            return item ? String(item).trim() : '';
+        }
+
+        // ================================================================
+        // FUNGSI DEBUG
+        // ================================================================
+        function debugStructure() {
+            debugSpreadsheetStructure()
+                .then(result => {
+                    alert('Debug completed:\n' + JSON.stringify(result, null, 2));
+                })
+                .catch(error => {
+                    alert('Debug error: ' + error.message);
+                });
+        }
+
+        // ================================================================
+        // FUNGSI PRELOAD DATA
+        // ================================================================
+        function preloadGameData() {
+            preloadAllLevelsData()
+                .then(data => {
+                    preloadedData = data;
+                    console.log('Data semua level telah dipreload:', Object.keys(preloadedData));
+                })
+                .catch(error => {
+                    console.log('Preload data gagal:', error);
+                });
+        }
+
+        // ================================================================
+        // FUNGSI FETCH INITIAL DATA (DENGAN SINKRONISASI NAMA-SEKOLAH)
+        // ================================================================
+        function fetchInitialData() {
+            getInitialData()
+                .then(data => {
+                    studentSchoolMap = {};
+                    
+                    // Ekstrak list nama & sekolah
+                    let namesList = [];
+                    let schoolsList = [];
+
+                    if (data.students && Array.isArray(data.students)) {
+                        // Jika backend mengembalikan pasangan [{name, school}, ...] atau [[nama, sekolah], ...]
+                        data.students.forEach(item => {
+                            const n = parseCleanString(Array.isArray(item) ? item[0] : item.name);
+                            const s = parseCleanString(Array.isArray(item) ? item[1] : item.school);
+                            if (n) {
+                                namesList.push(n);
+                                studentSchoolMap[n] = s;
+                            }
+                            if (s && !schoolsList.includes(s)) {
+                                schoolsList.push(s);
+                            }
+                        });
+                    } else {
+                        // Jika backend mengembalikan object { names: [...], schools: [...] }
+                        const rawNames = data.names || [];
+                        const rawSchools = data.schools || [];
+
+                        rawNames.forEach((item, index) => {
+                            const nameStr = parseCleanString(item);
+                            const schoolStr = parseCleanString(rawSchools[index]);
+                            if (nameStr) {
+                                namesList.push(nameStr);
+                                if (schoolStr) {
+                                    studentSchoolMap[nameStr] = schoolStr;
+                                }
+                            }
+                        });
+
+                        rawSchools.forEach(item => {
+                            const schoolStr = parseCleanString(item);
+                            if (schoolStr && !schoolsList.includes(schoolStr)) {
+                                schoolsList.push(schoolStr);
+                            }
+                        });
+                    }
+
+                    // Populate Dropdown Nama
+                    playerNameSelect.innerHTML = '<option value="" selected> Pilih Nama </option>';
+                    if (namesList.length > 0) {
+                        namesList.forEach(name => {
+                            const option = document.createElement('option');
+                            option.value = name;
+                            option.textContent = name;
+                            playerNameSelect.appendChild(option);
+                        });
+                        playerNameSelect.disabled = false;
+                    } else {
+                        playerNameSelect.innerHTML += '<option value="">Tidak ada nama</option>';
+                        playerNameSelect.disabled = true;
+                    }
+
+                    // Populate Dropdown Sekolah
+                    playerSchoolSelect.innerHTML = '<option value="" selected> Pilih Sekolah </option>';
+                    if (schoolsList.length > 0) {
+                        schoolsList.forEach(school => {
+                            const option = document.createElement('option');
+                            option.value = school;
+                            option.textContent = school;
+                            playerSchoolSelect.appendChild(option);
+                        });
+                        playerSchoolSelect.disabled = false;
+                    } else {
+                        playerSchoolSelect.innerHTML += '<option value="">Tidak ada sekolah</option>';
+                        playerSchoolSelect.disabled = true;
+                    }
+
+                    loadUserProgress();
+                })
+                .catch(error => {
+                    console.error('Gagal memuat data awal:', error);
+                    alert('Gagal memuat daftar nama dan sekolah.\nError: ' + error.message);
+                });
+        }
+
+        // ================================================================
+        // FUNGSI FETCH SPREADSHEET DATA
+        // ================================================================
+        function fetchSpreadsheetDataFromAppsScript(level) {
+            allMultiplicationData = [];
+            feedbackDisplay.textContent = 'Memuat soal...';
+            submitAnswerButton.disabled = true;
+
+            getMultiplicationData(level)
+                .then(data => {
+                    allMultiplicationData = data;
+                    submitAnswerButton.disabled = false;
+
+                    if (allMultiplicationData.length === 0) {
+                        feedbackDisplay.textContent = 'Tidak ada data pengurangan untuk level ini.';
+                        return;
+                    }
+
+                    console.log(`Data Level ${level} dimuat:`, allMultiplicationData.length, 'soal');
+                    currentQuestionIndex = 0;
+                    loadNewQuestion();
+                    startTimer();
+                    feedbackDisplay.textContent = '';
+                })
+                .catch(error => {
+                    console.error('Gagal mengambil data spreadsheet:', error);
+                    feedbackDisplay.textContent = 'Gagal memuat soal: ' + error.message;
+                    submitAnswerButton.disabled = false;
+                });
+        }
+
+        // ================================================================
+        // FUNGSI START GAME
+        // ================================================================
+        function startGameFast(level) {
+            playerName = playerNameSelect.value;
+            playerSchool = playerSchoolSelect.value;
+            selectedLevel = level;
+
+            if (!playerName || !playerSchool) {
+                showFeedback('Silakan pilih nama dan sekolah!', false);
+                return;
+            }
+
+            displayPlayerName.textContent = playerName;
+            displayPlayerSchool.textContent = playerSchool;
+            displaySelectedLevel.textContent = selectedLevel;
+            score = 0;
+            scoreDisplay.textContent = score;
+
+            startScreen.classList.remove('active');
+            gameScreen.classList.add('active');
+            container.classList.add('game-active');
+
+            showFeedback('Memuat soal...', true);
+            playerAnswerInput.value = '';
+            gameStartTime = new Date().getTime();
+
+            // Coba gunakan data preload
+            if (preloadedData[selectedLevel] && preloadedData[selectedLevel].length > 0) {
+                allMultiplicationData = preloadedData[selectedLevel];
+                console.log(`Menggunakan data preload Level ${selectedLevel}:`, allMultiplicationData.length + ' soal');
+                currentQuestionIndex = 0;
+                loadNewQuestion();
+                startTimer();
+                showFeedback('', true);
+            } else {
+                fetchSpreadsheetDataFromAppsScript(selectedLevel);
+            }
+        }
+
+        // ================================================================
+        // FUNGSI LOAD USER PROGRESS
+        // ================================================================
+        function loadUserProgress() {
+            const rawPlayerName = playerNameSelect.value;
+            const rawPlayerSchool = playerSchoolSelect.value;
+            const nameToPass = rawPlayerName || null;
+            const schoolToPass = rawPlayerSchool || null;
+
+            if (nameToPass && schoolToPass) {
+                getUserProgress(nameToPass, schoolToPass)
+                    .then(highestLevel => {
+                        highestUnlockedLevel = highestLevel || 0;
+                        updateLevelButtons();
+                        console.log('Progress loaded. Highest Level:', highestUnlockedLevel);
+                    })
+                    .catch(error => {
+                        console.error('Gagal memuat progres:', error);
+                        highestUnlockedLevel = 0;
+                        updateLevelButtons();
+                    });
+            } else {
+                highestUnlockedLevel = 0;
+                updateLevelButtons();
+                console.log('Nama/Sekolah belum dipilih. Level reset ke 0.');
+            }
+        }
+
+        function updateLevelButtons() {
+            levelButtons.forEach(button => {
+                const level = parseInt(button.dataset.level);
+                button.disabled = level > (highestUnlockedLevel + 1);
+            });
+            console.log('Tombol level diupdate. Unlocked:', highestUnlockedLevel);
+        }
+
+        // ================================================================
+        // FUNGSI GAME
+        // ================================================================
+        function loadNewQuestion() {
+            if (allMultiplicationData.length === 0) {
+                showFeedback('Tidak ada soal.', false);
+                return;
+            }
+            if (currentQuestionIndex >= allMultiplicationData.length) {
+                showFeedback('Semua soal telah selesai! Mengakhiri game.', true);
+                setTimeout(endGame, 1500);
+                return;
+            }
+
+            const selectedPair = allMultiplicationData[currentQuestionIndex];
+            currentQuestion.num1 = selectedPair[0];
+            currentQuestion.num2 = selectedPair[1];
+
+            number1Display.textContent = currentQuestion.num1;
+            number2Display.textContent = currentQuestion.num2 < 0
+                ? '(' + currentQuestion.num2 + ')'
+                : currentQuestion.num2;
+            playerAnswerInput.value = '';
+            showFeedback('', true);
+            focusAnswerInput();
+            currentQuestionIndex++;
+        }
+
+        function checkAnswerFast() {
+            if (isChecking) return;
+
+            const userAnswer = playerAnswerInput.value;
+
+            if (userAnswer === '') {
+                showFeedback('Masukkan jawaban Anda!', false);
+                return;
+            }
+
+            const userAnswerFloat = parseFloat(userAnswer.replace(',', '.'));
+
+            if (isNaN(userAnswerFloat)) {
+                showFeedback('Masukkan angka yang valid!', false);
+                return;
+            }
+
+            isChecking = true;
+            submitAnswerButton.disabled = true;
+            showFeedback('Memeriksa...', true);
+
+            setTimeout(() => {
+                const correctAnswer = currentQuestion.num1 - currentQuestion.num2;
+                const isCorrect = (userAnswerFloat == correctAnswer);
+
+                if (isCorrect) {
+                    score += 1;
+                    scoreDisplay.textContent = score;
+                    showFeedback('Benar! ✓', true);
+                } else {
+                    showFeedback(`Salah! Jawaban: ${correctAnswer}`, false);
+                }
+
+                isChecking = false;
+                submitAnswerButton.disabled = false;
+
+                setTimeout(() => {
+                    loadNewQuestion();
+                }, 800);
+            }, 100);
+        }
+
+        function showFeedback(message, isCorrect) {
+            feedbackDisplay.textContent = message;
+            if (message === '') {
+                feedbackDisplay.className = 'feedback';
+            } else {
+                feedbackDisplay.className = isCorrect ? 'feedback correct' : 'feedback incorrect';
+            }
+
+            if (isCorrect && message !== '' && message !== 'Memuat soal...' && message !== 'Memeriksa...') {
+                setTimeout(() => {
+                    if (feedbackDisplay.textContent === message) {
+                        feedbackDisplay.textContent = '';
+                        feedbackDisplay.className = 'feedback';
+                    }
+                }, 1500);
+            }
+        }
+
+        function focusAnswerInput() {
+            setTimeout(() => {
+                playerAnswerInput.focus();
+            }, 100);
+        }
+
+        function startTimer() {
+            clearInterval(timer);
+            timeLeft = gameDuration;
+            updateTimerDisplay();
+
+            timer = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    endGame();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function endGame() {
+            clearInterval(timer);
+
+            gameScreen.classList.remove('active');
+            endScreen.classList.add('active');
+            container.classList.remove('game-active');
+
+            finalScoreDisplay.textContent = score;
+            finalPlayerNameDisplay.textContent = playerName;
+            finalPlayerSchoolDisplay.textContent = playerSchool;
+            finalSelectedLevelDisplay.textContent = selectedLevel;
+            const totalTimeSpent = Math.floor((new Date().getTime() - gameStartTime) / 1000);
+
+            saveUserResult({
+                name: playerName,
+                school: playerSchool,
+                score: score,
+                timeSpent: totalTimeSpent,
+                selectedLevel: selectedLevel
+            })
+            .then(() => {
+                console.log('Hasil disimpan.');
+                loadUserProgress();
+            })
+            .catch(error => {
+                console.error('Gagal menyimpan hasil:', error);
+                alert('Gagal menyimpan hasil game.');
+                loadUserProgress();
+            });
+        }
+
+        function restartGame() {
+            endScreen.classList.remove('active');
+            startScreen.classList.add('active');
+            container.classList.remove('game-active');
+
+            playerNameSelect.selectedIndex = 0;
+            playerSchoolSelect.selectedIndex = 0;
+            playerAnswerInput.value = '';
+            playerName = '';
+            playerSchool = '';
+            selectedLevel = 0;
+            score = 0;
+            showFeedback('', true);
+            clearInterval(timer);
+            timeLeft = gameDuration;
+            updateTimerDisplay();
+            fetchInitialData();
+            currentQuestionIndex = 0;
+        }
+
+        // ================================================================
+        // EVENT LISTENERS & SINKRONISASI DROPDOWN
+        // ================================================================
+        
+        // Otomatis set Sekolah ketika Nama dipilih
+        playerNameSelect.addEventListener('change', () => {
+            const selectedName = playerNameSelect.value;
+            if (selectedName && studentSchoolMap[selectedName]) {
+                const targetSchool = studentSchoolMap[selectedName];
+                
+                // Cari opsi sekolah yang cocok
+                for (let i = 0; i < playerSchoolSelect.options.length; i++) {
+                    if (playerSchoolSelect.options[i].value === targetSchool) {
+                        playerSchoolSelect.selectedIndex = i;
+                        break;
+                    }
+                }
+            }
+            loadUserProgress();
+        });
+
+        playerSchoolSelect.addEventListener('change', loadUserProgress);
+
+        const keypadContainer = document.getElementById('keypad-container');
+        keypadContainer.addEventListener('click', (event) => {
+            const target = event.target;
+            if (!target.matches('.keypad-btn')) return;
+
+            const key = target.dataset.key;
+            let currentValue = playerAnswerInput.value;
+
+            if (key === 'C') {
+                playerAnswerInput.value = '';
+            } else if (key === 'Backspace') {
+                playerAnswerInput.value = currentValue.slice(0, -1);
+            } else {
+                playerAnswerInput.value = currentValue + key;
+            }
+        });
+
+        levelButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const level = parseInt(button.dataset.level);
+                startGameFast(level);
+            });
+        });
+
+        submitAnswerButton.addEventListener('click', checkAnswerFast);
+        restartButton.addEventListener('click', restartGame);
+
+        // ================================================================
+        // INISIALISASI
+        // ================================================================
+        window.onload = () => {
+            updateTimerDisplay();
+            
+            const statusText = document.getElementById('status-text');
+            statusText.textContent = 'Menguji koneksi...';
+            statusText.className = 'status-badge loading';
+            
+            // Test koneksi dengan JSONP
+            const callbackName = 'init_callback_' + Date.now();
+            const script = document.createElement('script');
+            let timeout = null;
+
+            const cleanup = () => {
+                if (timeout) clearTimeout(timeout);
+                if (window[callbackName]) delete window[callbackName];
+                if (script && script.parentNode) {
+                    script.parentNode.removeChild(script);
+                }
+            };
+
+            const url = new URL(WEB_APP_URL);
+            url.searchParams.append('callback', callbackName);
+            
+            window[callbackName] = function(response) {
+                cleanup();
+                
+                statusText.textContent = 'Tersambung';
+                statusText.className = 'status-badge success';
+                
+                // Load data setelah koneksi berhasil
+                fetchInitialData();
+                preloadGameData();
+                loadGameSettings();
+            };
+            
+            timeout = setTimeout(() => {
+                cleanup();
+                statusText.textContent = 'Gagal koneksi!';
+                statusText.className = 'status-badge error';
+                alert('Tidak dapat terhubung ke server.\n\nPastikan:\n1. URL Web App benar\n2. Web App sudah dideploy\n3. Akses diatur ke "Anyone"');
+            }, 15000);
+            
+            script.src = url.toString();
+            script.onerror = function() {
+                cleanup();
+                statusText.textContent = 'Gagal!';
+                statusText.className = 'status-badge error';
+                alert('Gagal koneksi. Cek URL Web App Anda.');
+            };
+            
+            document.body.appendChild(script);
+        };
+    
+</script>
+
+<script>
+// ================= SCRIPT FORM (Pendaftaran) =================
+
+        // Konfigurasi Google Sheets
+        // Spreadsheet ID: 1Q5garJNM9b6kP-jehoMCBQFGd8_lLvqXwrPgAVQzVUg
+        // Sheet name: nama
+        // Kolom A: Nama, Kolom B: Sekolah
+        
+        // URL Web App -- SEKARANG SAMA dengan WEB_APP_URL (satu proyek Apps Script
+        // untuk quiz & pendaftaran, tidak lagi pakai proyek/URL terpisah)
+        const GOOGLE_SCRIPT_URL = WEB_APP_URL;
+
+        // Jika belum memiliki Web App, gunakan mode simulasi untuk testing
+        const USE_SIMULATION = false; // Set ke false jika sudah memiliki Web App
+
+        function handleSubmit(event) {
+            event.preventDefault();
+            
+            // Reset status
+            clearErrors();
+            hideStatus();
+
+            // Ambil nilai input
+            const namaInput = document.getElementById('nama');
+            const sekolahInput = document.getElementById('sekolah');
+            const nama = namaInput.value.trim();
+            const sekolah = sekolahInput.value.trim();
+
+            // Validasi
+            let isValid = true;
+
+            if (!nama) {
+                showError('namaError');
+                namaInput.classList.add('error');
+                isValid = false;
+            } else {
+                namaInput.classList.remove('error');
+            }
+
+            if (!sekolah) {
+                showError('sekolahError');
+                sekolahInput.classList.add('error');
+                isValid = false;
+            } else {
+                sekolahInput.classList.remove('error');
+            }
+
+            if (!isValid) {
+                showStatus('Mohon lengkapi semua data yang diperlukan', 'error');
+                return;
+            }
+
+            // Kirim data
+            submitData(nama, sekolah);
+        }
+
+        function submitData(nama, sekolah) {
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.classList.add('loading');
+
+            const data = {
+                nama: nama,
+                sekolah: sekolah
+            };
+
+            if (USE_SIMULATION) {
+                // Mode simulasi untuk testing tanpa Web App
+                console.log('📤 Data yang dikirim (simulasi):', data);
+                
+                // Simulasi delay jaringan
+                setTimeout(() => {
+                    // Simulasikan sukses
+                    showStatus('✅ Data berhasil dikirim! (Mode Simulasi)', 'success');
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove('loading');
+                    
+                    // Reset form setelah sukses
+                    document.getElementById('registrationForm').reset();
+                    
+                    // Log data untuk debugging
+                    console.log('📊 Data yang akan disimpan ke Google Sheet:');
+                    console.log(`  - Nama: ${data.nama}`);
+                    console.log(`  - Sekolah: ${data.sekolah}`);
+                    console.log(`  - Spreadsheet ID: 1Q5garJNM9b6kP-jehoMCBQFGd8_lLvqXwrPgAVQzVUg`);
+                    console.log(`  - Sheet: nama`);
+                    console.log(`  - Kolom A: Nama, Kolom B: Sekolah`);
+                }, 1500);
+                return;
+            }
+
+            // Kirim data ke Google Apps Script Web App
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors', // Mode no-cors untuk menghindari CORS
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                // Karena mode no-cors, response tidak bisa dibaca
+                // Tapi data tetap terkirim
+                showStatus('✅ Data berhasil dikirim!', 'success');
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('loading');
+                document.getElementById('registrationForm').reset();
+                
+                console.log('✅ Data terkirim ke Google Sheets');
+                console.log(`  - Nama: ${data.nama}`);
+                console.log(`  - Sekolah: ${data.sekolah}`);
+            })
+            .catch(error => {
+                console.error('❌ Error:', error);
+                showStatus('❌ Gagal mengirim data. Silakan coba lagi.', 'error');
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('loading');
+            });
+        }
+
+        // --- Fungsi UI ---
+        function showError(id) {
+            document.getElementById(id).classList.add('show');
+        }
+
+        function clearErrors() {
+            document.querySelectorAll('.error-message').forEach(el => {
+                el.classList.remove('show');
+            });
+            document.querySelectorAll('.form-group input').forEach(el => {
+                el.classList.remove('error');
+            });
+        }
+
+        function showStatus(message, type = 'info') {
+            const statusEl = document.getElementById('statusMessage');
+            statusEl.textContent = message;
+            statusEl.className = 'status-message ' + type;
+        }
+
+        function hideStatus() {
+            const statusEl = document.getElementById('statusMessage');
+            statusEl.className = 'status-message';
+            statusEl.textContent = '';
+        }
+
+        function resetForm() {
+            document.getElementById('registrationForm').reset();
+            clearErrors();
+            hideStatus();
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = false;
+            submitBtn.classList.remove('loading');
+            
+            // Fokus ke input pertama
+            document.getElementById('nama').focus();
+        }
+
+        // Tambahkan event listener untuk real-time validation
+        document.addEventListener('DOMContentLoaded', function() {
+            const namaInput = document.getElementById('nama');
+            const sekolahInput = document.getElementById('sekolah');
+
+            namaInput.addEventListener('input', function() {
+                if (this.value.trim()) {
+                    this.classList.remove('error');
+                    document.getElementById('namaError').classList.remove('show');
+                }
+            });
+
+            sekolahInput.addEventListener('input', function() {
+                if (this.value.trim()) {
+                    this.classList.remove('error');
+                    document.getElementById('sekolahError').classList.remove('show');
+                }
+            });
+
+            // Fokus ke input pertama
+            namaInput.focus();
+        });
+    
+</script>
+
+</body>
+</html>

@@ -1,11 +1,11 @@
 [
   {
-    "name": "Materi",
+    "name": "Materi Pembelajaran",
     "description": "Ruang belajar untuk materi, modul, dan referensi yang disusun dengan rapi.",
     "category": "Pembelajaran",
     "icon": "✺",
     "color": "mint",
-    "status": "Segera hadir",
+    "status": "",
     "url": "materi/materi/"
   },
   {
@@ -14,7 +14,7 @@
     "category": "Pembelajaran",
     "icon": "?",
     "color": "amber",
-    "status": "Segera hadir",
+    "status": "",
     "url": "materi/media-pembelajaran-interaktif/"
   },
   {
@@ -23,34 +23,34 @@
     "category": "Pembelajaran",
     "icon": "✦",
     "color": "violet",
-    "status": "Eksplorasi",
-    "url": "materi/learning-manajemen-sistem/"
+    "status": "",
+    "url": "materi/asesmen/"
   },
   {
-    "name": "Ragam Aplikasi",
+    "name": "Aplikasi Pembelajaran",
     "description": "Kumpulan aplikasi sederhana untuk berbagai kebutuhan digital sehari-hari.",
     "category": "Aplikasi",
     "icon": "⌘",
     "color": "coral",
-    "status": "Dalam pengembangan",
-    "url": "materi/ragam-aplikasi/"
+    "status": "",
+    "url": "materi/aplikasi-pembelajaran/"
   },
   {
-    "name": "Ragam Aplikasi Administrasi Pembelajaran",
+    "name": "Aplikasi Administrasi Pembelajaran",
     "description": "Kelola jadwal, pendataan, dan rekap secara praktis dengan data yang terhubung.",
     "category": "Aplikasi",
     "icon": "▦",
     "color": "blue",
-    "status": "Segera hadir",
-    "url": "materi/ragam-aplikasi-administrasi-pembelajaran/"
+    "status": "",
+    "url": "materi/aplikasi-administrasi-pembelajaran/"
   },
   {
-    "name": "Peta Ide",
+    "name": "Ide Baru",
     "description": "Tempat untuk merangkum ide, menguji kemungkinan, dan menemukan arah baru.",
-    "category": "Proyek",
+    "category": "Teknologi",
     "icon": "⌁",
     "color": "pink",
-    "status": "Eksplorasi",
+    "status": "",
     "url": "materi/peta-ide/"
   }
 ]
