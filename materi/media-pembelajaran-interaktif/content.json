@@ -1,1 +1,31 @@
-{"category":"Pembelajaran","title":"Media Pembelajaran Interaktif","description":"Kuis interaktif dan permainan ringan untuk belajar sambil menguji pemahaman.","resources":[{"type":"Media","title":"Tambahkan media pertama","description":"Tambahkan kuis, game, video, atau media interaktif di sini.","url":"#"}]}
+{
+  "category": "Pembelajaran",
+  "title": "Media Pembelajaran Interaktif",
+  "description": "Kumpulan media interaktif matematika kelas 7, 8, dan 9. Pilih materi untuk membuka simulasi dan kuis.",
+  "resources": [
+    { "type": "Kelas 7", "title": "Aritmetika Sosial", "description": "Media interaktif dan kuis Aritmetika Sosial.", "url": "MPI/MPI-Aritmetika-Sosial-Kelas-7.html" },
+    { "type": "Kelas 7", "title": "Bilangan", "description": "Media interaktif dan kuis Bilangan.", "url": "MPI/MPI-Bilangan-Kelas-7.html" },
+    { "type": "Kelas 7", "title": "Bentuk Aljabar", "description": "Media interaktif dan kuis Bentuk Aljabar.", "url": "MPI/MPI-Bentuk-Aljabar-Kelas-7.html" },
+    { "type": "Kelas 7", "title": "Garis dan Sudut", "description": "Media interaktif dan kuis Garis dan Sudut.", "url": "MPI/MPI-Garis-dan-Sudut-Kelas-7.html" },
+    { "type": "Kelas 7", "title": "Perbandingan", "description": "Media interaktif dan kuis Perbandingan.", "url": "MPI/MPI-Perbandingan-Kelas-7.html" },
+    { "type": "Kelas 7", "title": "Peluang", "description": "Media interaktif dan kuis Peluang.", "url": "MPI/MPI-Peluang-Kelas-7.html" },
+    { "type": "Kelas 7", "title": "PLSV dan PtLSV", "description": "Media interaktif dan kuis PLSV dan PtLSV.", "url": "MPI/MPI-PLSV-dan-PtLSV-Kelas-7.html" },
+    { "type": "Kelas 7", "title": "Segiempat dan Segitiga", "description": "Media interaktif dan kuis Segiempat dan Segitiga.", "url": "MPI/MPI-Segiempat-dan-Segitiga-Kelas-7.html" },
+    { "type": "Kelas 7", "title": "Statistika", "description": "Media interaktif dan kuis Statistika.", "url": "MPI/MPI-Statistika-Kelas-7.html" },
+    { "type": "Kelas 8", "title": "Bilangan Berpangkat", "description": "Media interaktif dan kuis Bilangan Berpangkat.", "url": "MPI/MPI-Bilangan-Berpangkat-Kelas-8.html" },
+    { "type": "Kelas 8", "title": "Lingkaran", "description": "Media interaktif dan kuis Lingkaran.", "url": "MPI/MPI-Lingkaran-Kelas-8.html" },
+    { "type": "Kelas 8", "title": "Pola Bilangan", "description": "Media interaktif dan kuis Pola Bilangan.", "url": "MPI/MPI-Pola-Bilangan-Kelas-8.html" },
+    { "type": "Kelas 8", "title": "Relasi dan Fungsi", "description": "Media interaktif dan kuis Relasi dan Fungsi.", "url": "MPI/MPI-Relasi-dan-Fungsi-Kelas-8.html" },
+    { "type": "Kelas 8", "title": "SPLDV", "description": "Media interaktif dan kuis SPLDV.", "url": "MPI/MPI-SPLDV-Kelas-8.html" },
+    { "type": "Kelas 8", "title": "Statistika dan Peluang", "description": "Media interaktif dan kuis Statistika dan Peluang.", "url": "MPI/MPI-Statistika-dan-Peluang-Kelas-8.html" },
+    { "type": "Kelas 8", "title": "Teorema Pythagoras", "description": "Media interaktif dan kuis Teorema Pythagoras.", "url": "MPI/MPI-Teorema-Pythagoras-Kelas-8.html" },
+    { "type": "Kelas 9", "title": "Bangun Ruang Sisi Datar", "description": "Media interaktif dan kuis Bangun Ruang Sisi Datar.", "url": "MPI/MPI-Bangun-Ruang-Sisi-Datar-Kelas-9.html" },
+    { "type": "Kelas 9", "title": "Bangun Ruang Sisi Lengkung", "description": "Media interaktif dan kuis Bangun Ruang Sisi Lengkung.", "url": "MPI/MPI-Bangun-Ruang-Sisi-Lengkung-Kelas-9.html" },
+    { "type": "Kelas 9", "title": "Bilangan Berpangkat", "description": "Media interaktif dan kuis Bilangan Berpangkat.", "url": "MPI/MPI-Bilangan-Berpangkat-Kelas-9.html" },
+    { "type": "Kelas 9", "title": "Faktor Skala", "description": "Media interaktif dan kuis Faktor Skala.", "url": "MPI/MPI-Faktor-Skala-Kelas-9.html" },
+    { "type": "Kelas 9", "title": "Kesebangunan dan Kekongruenan", "description": "Media interaktif dan kuis Kesebangunan dan Kekongruenan.", "url": "MPI/MPI-Kesebangunan-dan-Kekongruenan-Kelas-9.html" },
+    { "type": "Kelas 9", "title": "Peluang", "description": "Media interaktif dan kuis Peluang.", "url": "MPI/MPI-Peluang-Kelas-9.html" },
+    { "type": "Kelas 9", "title": "Statistika", "description": "Media interaktif dan kuis Statistika.", "url": "MPI/MPI-Statistika-Kelas-9.html" },
+    { "type": "Kelas 9", "title": "Transformasi Geometri", "description": "Media interaktif dan kuis Transformasi Geometri.", "url": "MPI/MPI-Transformasi-Geometri-Kelas-9.html" }
+  ]
+}
